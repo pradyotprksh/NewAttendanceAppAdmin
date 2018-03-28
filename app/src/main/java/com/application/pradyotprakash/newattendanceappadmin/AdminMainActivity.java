@@ -80,7 +80,7 @@ public class AdminMainActivity extends AppCompatActivity {
         listFaculty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AdminMainActivity.this, "See Faculty List", Toast.LENGTH_SHORT).show();
+                 sendToAllFaculty();
             }
         });
         notificationFaculty.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +116,7 @@ public class AdminMainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         adminMainFirestore = FirebaseFirestore.getInstance();
     }
+
 
     @Override
     protected void onStart() {
@@ -194,6 +195,12 @@ public class AdminMainActivity extends AppCompatActivity {
 
     private void sendToAllStudent() {
         Intent intent = new Intent(AdminMainActivity.this, AdminAllStudentList.class);
+        intent.putExtra("branch", branch);
+        startActivity(intent);
+    }
+
+    private void sendToAllFaculty() {
+        Intent intent = new Intent(AdminMainActivity.this, AdminAllFacultyList.class);
         intent.putExtra("branch", branch);
         startActivity(intent);
     }

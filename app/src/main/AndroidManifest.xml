@@ -65,6 +65,7 @@
             android:name=".AdminEachStudentNotification"
             android:parentActivityName=".EachStudentInformation"
             android:screenOrientation="portrait" />
+        <activity android:name=".AdminAllFacultyList"></activity>
     </application>
 
 </manifest>
