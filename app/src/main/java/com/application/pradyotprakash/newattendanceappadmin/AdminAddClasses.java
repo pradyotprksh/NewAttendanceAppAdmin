@@ -35,10 +35,14 @@ public class AdminAddClasses extends AppCompatActivity {
     private AutoCompleteTextView semesterOption;
     private ImageView semesterSpinner;
     private EditText classValue;
-    private Button addClass;
-    String branch;
-    private FirebaseFirestore adminAddClassFirestore;
-    private static final String[] semester = new String[]{"Semester 1", "Semester 2", "Semester 3", "Semester 4", "Semester 5", "Semester 6"};
+    private Button addClass, getClass;
+    private String semesterValue;
+    private static String branch;
+    private FirebaseFirestore adminAddClassFirestore, mFirestore;
+    private static final String[] semester = new String[]{"Semester 1", "Semester 2", "Semester 3", "Semester 4", "Semester 5", "Semester 6", "Semester 7", "Semester 8"};
+    private RecyclerView mClassList;
+    private List<AddClassList> classList;
+    private AddClassRecyclerAdapter classRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +70,15 @@ public class AdminAddClasses extends AppCompatActivity {
         addClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String semester = semesterOption.getText().toString();
+                semesterValue = semesterOption.getText().toString();
                 String classValues = classValue.getText().toString().toUpperCase();
-                if (!TextUtils.isEmpty(semester) && !TextUtils.isEmpty(classValues)) {
+                if (!TextUtils.isEmpty(semesterValue) && !TextUtils.isEmpty(classValues)) {
                     HashMap<String, String> adminMap = new HashMap<>();
                     adminMap.put("classValue", classValues);
-                    adminAddClassFirestore.collection("Class").document(branch).collection(semester).document().set(adminMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    adminMap.put("classTeacher", "Assign Teacher");
+                    adminMap.put("semester", semesterValue);
+                    adminMap.put("branch", branch);
+                    adminAddClassFirestore.collection("Class").document(branch).collection(semesterValue).document(classValues).set(adminMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
@@ -84,6 +91,37 @@ public class AdminAddClasses extends AppCompatActivity {
                     });
                 } else {
                     Toast.makeText(AdminAddClasses.this, "Fill all the details.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        getClass = findViewById(R.id.admin_getclass_btn2);
+        getClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                semesterValue = semesterOption.getText().toString();
+                if (!TextUtils.isEmpty(semesterValue)) {
+                    mClassList = findViewById(R.id.classList);
+                    classList = new ArrayList<>();
+                    classRecyclerAdapter = new AddClassRecyclerAdapter(classList, getApplicationContext());
+                    mClassList.setHasFixedSize(true);
+                    mClassList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    mClassList.setAdapter(classRecyclerAdapter);
+                    mFirestore = FirebaseFirestore.getInstance();
+                    mFirestore.collection("Class").document(branch).collection(semesterValue).orderBy("classValue").addSnapshotListener(AdminAddClasses.this, new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                            for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+                                if (doc.getType() == DocumentChange.Type.ADDED) {
+                                    String subject_id = doc.getDocument().getId();
+                                    AddClassList classValueList = doc.getDocument().toObject(AddClassList.class).withId(subject_id);
+                                    classList.add(classValueList);
+                                    classRecyclerAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    Toast.makeText(AdminAddClasses.this, "Select Semester To Get Its Classes.", Toast.LENGTH_LONG).show();
                 }
             }
         });
