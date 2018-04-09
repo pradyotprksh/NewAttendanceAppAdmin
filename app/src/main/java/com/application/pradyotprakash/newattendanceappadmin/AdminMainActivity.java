@@ -39,7 +39,7 @@ public class AdminMainActivity extends AppCompatActivity {
     private String user_id, branch;
     private TextView adminMainName;
     private CircleImageView adminMainImage;
-    private Button addFaculty, listFaculty, notificationFaculty, listStudent, notificationStudent, addClass, addTimetable;
+    private Button addFaculty, listFaculty, notificationFaculty, listStudent, notificationStudent, addClass, addSubjects;
     private static final int FILE_SELECT_CODE = 0;
 
     @Override
@@ -56,7 +56,7 @@ public class AdminMainActivity extends AppCompatActivity {
         notificationFaculty = findViewById(R.id.admin_send_notification_faculty);
         listStudent = findViewById(R.id.admin_student_list);
         notificationStudent = findViewById(R.id.admin_send_notification_student);
-        addTimetable = findViewById(R.id.admin_add_timetable);
+        addSubjects = findViewById(R.id.admin_add_timetable);
         addClass = findViewById(R.id.admin_add_classes);
         addFaculty.setEnabled(false);
         addClass.setEnabled(false);
@@ -64,7 +64,7 @@ public class AdminMainActivity extends AppCompatActivity {
         notificationFaculty.setEnabled(false);
         listStudent.setEnabled(false);
         notificationFaculty.setEnabled(false);
-        addTimetable.setEnabled(false);
+        addSubjects.setEnabled(false);
         adminMainImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,10 +101,10 @@ public class AdminMainActivity extends AppCompatActivity {
                 sendToStudentNotification();
             }
         });
-        addTimetable.setOnClickListener(new View.OnClickListener() {
+        addSubjects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendToTimetable();
+                sendToSubjects();
             }
         });
         addClass.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +146,7 @@ public class AdminMainActivity extends AppCompatActivity {
                             notificationFaculty.setEnabled(true);
                             listStudent.setEnabled(true);
                             notificationFaculty.setEnabled(true);
-                            addTimetable.setEnabled(true);
+                            addSubjects.setEnabled(true);
                         }
                     } else {
                         String retrieving_error = task.getException().getMessage();
@@ -205,8 +205,8 @@ public class AdminMainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void sendToTimetable() {
-        Intent intent = new Intent(AdminMainActivity.this, SelectSemesterClassTimetable.class);
+    private void sendToSubjects() {
+        Intent intent = new Intent(AdminMainActivity.this, SelectSemesterClassSubjects.class);
         intent.putExtra("branch", branch);
         startActivity(intent);
     }

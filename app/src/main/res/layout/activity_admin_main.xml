@@ -126,7 +126,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:padding="10dp"
-        android:text="@string/admin_add_timetable_btn"
+        android:text="Add Subjects"
         android:textColor="@android:color/white"
         android:theme="@style/AdminButton3"
         app:layout_constraintEnd_toEndOf="parent"

@@ -66,7 +66,10 @@
             android:parentActivityName=".EachStudentInformation"
             android:screenOrientation="portrait" />
         <activity android:name=".AdminAllFacultyList" />
-        <activity android:name=".AssignClassTeacher"></activity>
+        <activity android:name=".AssignClassTeacher" />
+        <activity android:name=".EachClassDetails" />
+        <activity android:name=".AddSubjects" />
+        <activity android:name=".SelectSemesterClassSubjects"></activity>
     </application>
 
 </manifest>

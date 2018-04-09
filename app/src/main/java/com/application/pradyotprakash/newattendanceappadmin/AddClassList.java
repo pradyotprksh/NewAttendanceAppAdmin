@@ -1,6 +1,6 @@
 package com.application.pradyotprakash.newattendanceappadmin;
 
-public class AddClassList extends SubjectId{
+public class AddClassList extends ClassId {
 
     private String classValue;
     private String classTeacher;
