@@ -73,7 +73,7 @@
         <activity android:name=".AssignSubjectTeacher" />
         <activity android:name=".EachSubjectDetails" />
         <activity android:name=".AddTimetable" />
-        <activity android:name=".SelectSubjectTimetable"></activity>
+        <activity android:name=".SelectSubjectTimetable"/>
     </application>
 
 </manifest>

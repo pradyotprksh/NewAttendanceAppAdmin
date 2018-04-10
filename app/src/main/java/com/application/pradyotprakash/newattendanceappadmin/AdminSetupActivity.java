@@ -67,7 +67,7 @@ public class AdminSetupActivity extends AppCompatActivity {
         adminId = findViewById(R.id.admin_setup_id);
         adminSetupBtn = findViewById(R.id.admin_setup_btn);
         adminName = findViewById(R.id.admin_setup_name);
-        adminBranch = findViewById(R.id.admin_setup_branch);
+        adminBranch = findViewById(R.id.select_weekday);
         adminBranch.setThreshold(1);
         branchSpinner = findViewById(R.id.branch_spinner);
         ArrayAdapter<String> adapterBranch = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, branch);

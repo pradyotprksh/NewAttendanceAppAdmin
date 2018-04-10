@@ -61,7 +61,12 @@ public class TimetableSubjectRecyclerAdapter extends RecyclerView.Adapter<Timeta
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, subjectId + branchValue + semesterValue + subjectTeacherId + classValue, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, AddTimetable.class);
+                intent.putExtra("classValue", classValue);
+                intent.putExtra("subjectCode", subjectId);
+                intent.putExtra("subjectTeacher", subjectTeacherId);
+                intent.putExtra("subjectName", subjectList.get(position).getSubjectName());
+                context.startActivity(intent);
             }
         });
     }
