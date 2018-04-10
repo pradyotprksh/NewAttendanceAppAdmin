@@ -71,7 +71,9 @@
         <activity android:name=".AddSubjects" />
         <activity android:name=".SelectSemesterClassSubjects" />
         <activity android:name=".AssignSubjectTeacher" />
-        <activity android:name=".EachSubjectDetails"></activity>
+        <activity android:name=".EachSubjectDetails" />
+        <activity android:name=".AddTimetable" />
+        <activity android:name=".SelectSubjectTimetable"></activity>
     </application>
 
 </manifest>

@@ -36,10 +36,12 @@ public class TimetableClassRecyclerAdapter extends RecyclerView.Adapter<Timetabl
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String classValue = classList.get(position).getClassValue();
-                Intent timetableIndent = new Intent(context, AdminTimetable.class);
-                timetableIndent.putExtra("classValue",classValue);
-                context.startActivity(timetableIndent);
+                Intent intent = new Intent(context, SelectSubjectTimetable.class);
+                intent.putExtra("classValue", classList.get(position).getClassValue());
+                intent.putExtra("branch", classList.get(position).getBranch());
+                intent.putExtra("semester", classList.get(position).getSemester());
+                intent.putExtra("classTeacher", classList.get(position).getClassTeacher());
+                context.startActivity(intent);
             }
         });
     }
