@@ -69,7 +69,9 @@
         <activity android:name=".AssignClassTeacher" />
         <activity android:name=".EachClassDetails" />
         <activity android:name=".AddSubjects" />
-        <activity android:name=".SelectSemesterClassSubjects"></activity>
+        <activity android:name=".SelectSemesterClassSubjects" />
+        <activity android:name=".AssignSubjectTeacher" />
+        <activity android:name=".EachSubjectDetails"></activity>
     </application>
 
 </manifest>

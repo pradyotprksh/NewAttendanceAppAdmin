@@ -16,37 +16,36 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-public class AddClassRecyclerAdapter extends RecyclerView.Adapter<AddClassRecyclerAdapter.ViewHolder> {
+public class SubjectRecyclerAdapter extends RecyclerView.Adapter<SubjectRecyclerAdapter.ViewHolder> {
 
-    private List<AddClassList> subjectList;
+    private List<SubjectList> subjectList;
     private Context context;
     private FirebaseFirestore mFirestore;
-    private String classTeacherId, facultyName;
+    private String subjectTeacherId, facultyName;
 
-    public AddClassRecyclerAdapter(List<AddClassList> subjectList, Context context) {
+    public SubjectRecyclerAdapter(List<SubjectList> subjectList, Context context) {
         this.subjectList = subjectList;
         this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.class_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.subject_list_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final SubjectRecyclerAdapter.ViewHolder holder, final int position) {
         final String subjectId = subjectList.get(position).subjectId;
-        final String classValueString = subjectList.get(position).getClassValue();
         final String branchValue = subjectList.get(position).getBranch();
         final String semesterValue = subjectList.get(position).getSemester();
         mFirestore = FirebaseFirestore.getInstance();
-        holder.classValue.setText(subjectList.get(position).getClassValue());
-        classTeacherId = subjectList.get(position).getClassTeacher();
-        if (classTeacherId.equals("Assign Teacher")) {
-            holder.teacherValue.setText(subjectList.get(position).getClassTeacher());
+        holder.subjectValue.setText(subjectList.get(position).getSubjectName());
+        subjectTeacherId = subjectList.get(position).getSubjectTeacher();
+        if (subjectTeacherId.equals("Assign Subject Teacher")) {
+            holder.teacherValue.setText(subjectList.get(position).getSubjectTeacher());
         } else {
-            mFirestore.collection("Faculty").document(classTeacherId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            mFirestore.collection("Faculty").document(subjectTeacherId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
@@ -61,20 +60,21 @@ public class AddClassRecyclerAdapter extends RecyclerView.Adapter<AddClassRecycl
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (classTeacherId.equals("Assign Teacher")) {
-                    Intent intent = new Intent(context, AssignClassTeacher.class);
+                if (subjectTeacherId.equals("Assign Subject Teacher")) {
+                    Intent intent = new Intent(context, AssignSubjectTeacher.class);
+                    intent.putExtra("branch", branchValue);
+                    intent.putExtra("semester", semesterValue);
                     intent.putExtra("subjectId", subjectId);
-                    intent.putExtra("classValue", classValueString);
-                    intent.putExtra("branchValue", branchValue);
-                    intent.putExtra("semesterValue", semesterValue);
+                    intent.putExtra("subjectName", subjectList.get(position).getSubjectName());
                     context.startActivity(intent);
                 } else {
-                    Intent intent = new Intent(context, EachClassDetails.class);
+                    Intent intent = new Intent(context, EachSubjectDetails.class);
+                    intent.putExtra("facultyName", facultyName);
                     intent.putExtra("subjectId", subjectId);
-                    intent.putExtra("branchValue", branchValue);
-                    intent.putExtra("semesterValue", semesterValue);
-                    intent.putExtra("classTeacher", facultyName);
-                    intent.putExtra("classTeacherId", classTeacherId);
+                    intent.putExtra("subjectName", subjectList.get(position).getSubjectName());
+                    intent.putExtra("branch", branchValue);
+                    intent.putExtra("semester", semesterValue);
+                    intent.putExtra("facultyId", subjectTeacherId);
                     context.startActivity(intent);
                 }
             }
@@ -88,13 +88,13 @@ public class AddClassRecyclerAdapter extends RecyclerView.Adapter<AddClassRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private View mView;
-        private TextView teacherValue, classValue;
+        private TextView teacherValue, subjectValue;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             teacherValue = mView.findViewById(R.id.subjectTeacher_value);
-            classValue = mView.findViewById(R.id.class_value);
+            subjectValue = mView.findViewById(R.id.subject_value);
         }
     }
 }

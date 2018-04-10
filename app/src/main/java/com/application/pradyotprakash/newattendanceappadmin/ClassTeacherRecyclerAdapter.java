@@ -95,9 +95,6 @@ public class ClassTeacherRecyclerAdapter extends RecyclerView.Adapter<ClassTeach
                                                                         @Override
                                                                         public void onSuccess(Void aVoid) {
                                                                             Toast.makeText(context, classId + " is assigned to " + facultyList.get(position).getName(), Toast.LENGTH_SHORT).show();
-                                                                            Intent intent = new Intent(context, AdminAddClasses.class);
-                                                                            intent.putExtra("branch", branchValue);
-                                                                            context.startActivity(intent);
                                                                         }
                                                                     });
                                                                 }

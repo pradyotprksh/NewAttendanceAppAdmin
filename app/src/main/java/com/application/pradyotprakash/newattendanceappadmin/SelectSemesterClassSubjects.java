@@ -27,9 +27,13 @@ public class SelectSemesterClassSubjects extends AppCompatActivity {
     private android.support.v7.widget.Toolbar mToolbar;
     private AutoCompleteTextView semesterOption;
     private ImageView semesterSpinner;
-    private Button addSubjects;
+    private Button addSubjects, getSubjects;
     String branch, semesterValue;
     private static final String[] semester = new String[]{"Semester 1", "Semester 2", "Semester 3", "Semester 4", "Semester 5", "Semester 6", "Semester 7", "Semester 8"};
+    private RecyclerView mSubjectList;
+    private List<SubjectList> subjectList;
+    private SubjectRecyclerAdapter subjectRecyclerAdapter;
+    private FirebaseFirestore mFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,37 @@ public class SelectSemesterClassSubjects extends AppCompatActivity {
                     timetableIndent.putExtra("semester", semesterOption.getText().toString());
                     timetableIndent.putExtra("branch", branch);
                     startActivity(timetableIndent);
+                } else {
+                    Toast.makeText(SelectSemesterClassSubjects.this, "Select Semester First.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        getSubjects = findViewById(R.id.get_class_now);
+        getSubjects.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(semesterOption.getText().toString())) {
+                    mSubjectList = findViewById(R.id.mSubjectList);
+                    subjectList = new ArrayList<>();
+                    subjectList.clear();
+                    subjectRecyclerAdapter = new SubjectRecyclerAdapter(subjectList, getApplicationContext());
+                    mSubjectList.setHasFixedSize(true);
+                    mSubjectList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    mSubjectList.setAdapter(subjectRecyclerAdapter);
+                    mFirestore = FirebaseFirestore.getInstance();
+                    mFirestore.collection("Subject").document(branch).collection(semesterOption.getText().toString()).orderBy("subjectCode").addSnapshotListener(SelectSemesterClassSubjects.this, new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                            for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+                                if (doc.getType() == DocumentChange.Type.ADDED) {
+                                    String subject_id = doc.getDocument().getId();
+                                    SubjectList classValueList = doc.getDocument().toObject(SubjectList.class).withId(subject_id);
+                                    subjectList.add(classValueList);
+                                    subjectRecyclerAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        }
+                    });
                 } else {
                     Toast.makeText(SelectSemesterClassSubjects.this, "Select Semester First.", Toast.LENGTH_SHORT).show();
                 }
