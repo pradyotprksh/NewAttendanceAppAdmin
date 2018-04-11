@@ -6,6 +6,62 @@
     android:layout_height="match_parent"
     tools:context=".AddTimetable">
 
+    <Button
+        android:id="@+id/add_timetable"
+        android:layout_width="219dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/subject_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/colorAccent"
+        android:padding="10dp"
+        android:text="Add Timetable"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/from_btn" />
+
+    <Button
+        android:id="@+id/from_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/subject_name"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_toStartOf="@+id/to_btn"
+        android:background="@drawable/button_layout_background"
+        android:padding="5dp"
+        android:text="From"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/to_btn"
+        app:layout_constraintHorizontal_bias="0.021"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_weekday" />
+
+    <Button
+        android:id="@+id/to_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/from_btn"
+        android:layout_marginEnd="48dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_layout_background"
+        android:padding="5dp"
+        android:text="To"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_weekday" />
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/adminSetupToolbar"
         android:layout_width="0dp"
@@ -22,12 +78,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:padding="10dp"
         android:text="Loading Subject..."
         android:textColor="@android:color/black"
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/adminSetupToolbar" />
 
@@ -37,14 +94,15 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
         android:padding="10dp"
         android:text="Loading Subject Id..."
         android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subjectValue" />
+        app:layout_constraintTop_toBottomOf="@+id/adminSetupToolbar" />
 
     <AutoCompleteTextView
         android:id="@+id/select_weekday"
@@ -52,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="50dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="36dp"
         android:ems="10"
         android:hint="Select Day of Week"
         android:padding="16dp"
@@ -74,5 +132,19 @@
         app:layout_constraintBottom_toBottomOf="@+id/select_weekday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/select_weekday" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/timetableList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_timetable" />
 
 </android.support.constraint.ConstraintLayout>
