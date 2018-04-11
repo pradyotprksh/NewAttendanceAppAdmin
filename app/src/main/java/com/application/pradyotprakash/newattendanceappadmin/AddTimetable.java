@@ -36,7 +36,7 @@ public class AddTimetable extends AppCompatActivity {
     private Button from_btn, to_btn, addTimetable;
     private int hourValue;
     private int minuteValue;
-    private FirebaseFirestore mFirestore;
+    private FirebaseFirestore mFirestore, mFirestore1;
     private static final String[] days = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     private RecyclerView mSubjectListView;
     private List<SubjectsTimetable> subjectList;
@@ -87,25 +87,42 @@ public class AddTimetable extends AppCompatActivity {
         });
         addTimetable = findViewById(R.id.add_timetable);
         mFirestore = FirebaseFirestore.getInstance();
+        mFirestore1 = FirebaseFirestore.getInstance();
         addTimetable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(weekOption.getText().toString()) && !from_btn.getText().toString().equals("From") && !to_btn.getText().toString().equals("To")) {
-                    HashMap<String, Object> addTimetable = new HashMap<>();
-                    addTimetable.put("subjectName", subjectName);
-                    addTimetable.put("subjectCode", subjectCode);
-                    addTimetable.put("subjectTeacher", subjectTeacher);
-                    addTimetable.put("from", from_btn.getText().toString());
-                    addTimetable.put("to", to_btn.getText().toString());
-                    addTimetable.put("weekDay", weekOption.getText().toString());
-                    mFirestore.collection("Timetable").document(classValue).collection(weekOption.getText().toString()).document(subjectCode + from_btn.getText().toString()).set(addTimetable).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(AddTimetable.this, "Timetable Added.", Toast.LENGTH_SHORT).show();
-                            from_btn.setText(to_btn.getText().toString());
-                            to_btn.setText("To");
-                        }
-                    });
+                    if (!subjectTeacher.equals("Assign Subject Teacher")) {
+                        HashMap<String, Object> addTimetable = new HashMap<>();
+                        addTimetable.put("subjectName", subjectName);
+                        addTimetable.put("subjectCode", subjectCode);
+                        addTimetable.put("subjectTeacher", subjectTeacher);
+                        addTimetable.put("from", from_btn.getText().toString());
+                        addTimetable.put("to", to_btn.getText().toString());
+                        addTimetable.put("weekDay", weekOption.getText().toString());
+                        mFirestore.collection("Timetable").document(classValue).collection(weekOption.getText().toString()).document(subjectCode + from_btn.getText().toString() + weekOption.getText().toString()).set(addTimetable).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                HashMap<String, Object> addTimetableFaculty = new HashMap<>();
+                                addTimetableFaculty.put("subjectName", subjectName);
+                                addTimetableFaculty.put("subjectCode", subjectCode);
+                                addTimetableFaculty.put("from", from_btn.getText().toString());
+                                addTimetableFaculty.put("to", to_btn.getText().toString());
+                                addTimetableFaculty.put("weekDay", weekOption.getText().toString());
+                                addTimetableFaculty.put("classValue", classValue);
+                                mFirestore1.collection("Faculty").document(subjectTeacher).collection("Timetable").document(subjectCode + from_btn.getText().toString() + weekOption.getText().toString()).set(addTimetableFaculty).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(AddTimetable.this, "Timetable Added.", Toast.LENGTH_SHORT).show();
+                                        from_btn.setText(to_btn.getText().toString());
+                                        to_btn.setText("To");
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        Toast.makeText(AddTimetable.this, "First Assign The Subject Teacher.", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(AddTimetable.this, "Fill All The Details For Timetable.", Toast.LENGTH_SHORT).show();
                 }
