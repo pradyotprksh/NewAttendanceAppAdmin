@@ -12,64 +12,12 @@
 
         <!-- TODO: Update blank fragment layout -->
 
-        <EditText
-            android:id="@+id/subject_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="12dp"
-            android:ems="10"
-            android:hint="Subject Name"
-            android:inputType="textPersonName"
-            android:padding="15dp"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/from_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/subject_name"
-            android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/to_btn"
-            android:background="@drawable/button_layout_background"
-            android:textAllCaps="false"
-            android:text="From"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/to_btn"
-            android:layout_width="wrap_content"
-            android:textAllCaps="false"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/from_btn"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/button_layout_background"
-            android:text="To"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/add_timetable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/subject_name"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="36dp"
-            android:backgroundTint="@color/colorAccent"
-            android:text="Add Timetable"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white" />
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/monday_subject"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignStart="@+id/subject_name"
-            android:layout_below="@+id/add_timetable"
-            android:layout_margin="22dp" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true" />
 
     </RelativeLayout>
 

@@ -5,21 +5,42 @@ package com.application.pradyotprakash.newattendanceappadmin;
  */
 
 public class MondaySubjects {
-    String subject, from, to, takenBy;
+    private String subjectName, subjectCode, subjectTeacher, from, to, weekDay;
 
-    public MondaySubjects(String subject, String from, String to, String takenBy) {
-        this.subject = subject;
+    public MondaySubjects() {
+    }
+
+    public MondaySubjects(String subjectName, String subjectCode, String subjectTeacher, String from, String to, String weekDay) {
+        this.subjectName = subjectName;
+        this.subjectCode = subjectCode;
+        this.subjectTeacher = subjectTeacher;
         this.from = from;
         this.to = to;
-        this.takenBy = takenBy;
+        this.weekDay = weekDay;
     }
 
-    public String getTakenBy() {
-        return takenBy;
+    public String getSubjectName() {
+        return subjectName;
     }
 
-    public void setTakenBy(String takenBy) {
-        this.takenBy = takenBy;
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
+
+    public String getSubjectCode() {
+        return subjectCode;
+    }
+
+    public void setSubjectCode(String subjectCode) {
+        this.subjectCode = subjectCode;
+    }
+
+    public String getSubjectTeacher() {
+        return subjectTeacher;
+    }
+
+    public void setSubjectTeacher(String subjectTeacher) {
+        this.subjectTeacher = subjectTeacher;
     }
 
     public String getFrom() {
@@ -38,15 +59,11 @@ public class MondaySubjects {
         this.to = to;
     }
 
-    public MondaySubjects() {
-
+    public String getWeekDay() {
+        return weekDay;
     }
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setWeekDay(String weekDay) {
+        this.weekDay = weekDay;
     }
 }

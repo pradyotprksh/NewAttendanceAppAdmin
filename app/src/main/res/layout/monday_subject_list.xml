@@ -12,6 +12,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="14dp"
         android:text="No Data"
+        android:textAlignment="textEnd"
         android:textSize="18sp" />
 
     <TextView
@@ -28,9 +29,10 @@
         android:id="@+id/subject_code"
         android:layout_width="89dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/time_value"
+        android:layout_alignEnd="@+id/time_value"
         android:layout_alignTop="@+id/subject_value"
         android:text="No Data"
+        android:textAlignment="textEnd"
         android:textSize="18sp" />
 
     <TextView

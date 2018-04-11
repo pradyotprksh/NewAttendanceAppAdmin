@@ -107,26 +107,28 @@ public class AddTimetable extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Toast.makeText(AddTimetable.this, "Fill All The Details.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddTimetable.this, "Fill All The Details For Timetable.", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-        mSubjectListView = findViewById(R.id.timetableList);
-        subjectList = new ArrayList<>();
-        subjectRecyclerAdapter = new TimetableRecyclerAdapter(subjectList, AddTimetable.this);
-        mSubjectListView.setHasFixedSize(true);
-        mSubjectListView.setLayoutManager(new LinearLayoutManager(AddTimetable.this));
-        mSubjectListView.setAdapter(subjectRecyclerAdapter);
-        mFirestore = FirebaseFirestore.getInstance();
-        mFirestore.collection("Timetable").document(classValue).collection("Monday").orderBy("from").addSnapshotListener(AddTimetable.this, new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
-                    if (doc.getType() == DocumentChange.Type.ADDED) {
-                        SubjectsTimetable subjects = doc.getDocument().toObject(SubjectsTimetable.class);
-                        subjectList.add(subjects);
-                        subjectRecyclerAdapter.notifyDataSetChanged();
-                    }
+                if (!TextUtils.isEmpty(weekOption.getText().toString())) {
+                    mSubjectListView = findViewById(R.id.timetableList);
+                    subjectList = new ArrayList<>();
+                    subjectRecyclerAdapter = new TimetableRecyclerAdapter(subjectList, AddTimetable.this);
+                    mSubjectListView.setHasFixedSize(true);
+                    mSubjectListView.setLayoutManager(new LinearLayoutManager(AddTimetable.this));
+                    mSubjectListView.setAdapter(subjectRecyclerAdapter);
+                    mFirestore = FirebaseFirestore.getInstance();
+                    mFirestore.collection("Timetable").document(classValue).collection(weekOption.getText().toString()).orderBy("from").addSnapshotListener(AddTimetable.this, new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                            for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+                                if (doc.getType() == DocumentChange.Type.ADDED) {
+                                    SubjectsTimetable subjects = doc.getDocument().toObject(SubjectsTimetable.class);
+                                    subjectList.add(subjects);
+                                    subjectRecyclerAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        }
+                    });
                 }
             }
         });

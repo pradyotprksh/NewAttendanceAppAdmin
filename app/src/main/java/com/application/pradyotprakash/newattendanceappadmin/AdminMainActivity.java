@@ -39,7 +39,7 @@ public class AdminMainActivity extends AppCompatActivity {
     private String user_id, branch;
     private TextView adminMainName;
     private CircleImageView adminMainImage;
-    private Button addFaculty, listFaculty, notificationFaculty, listStudent, notificationStudent, addClass, addSubjects, addTimetable;
+    private Button addFaculty, listFaculty, notificationFaculty, listStudent, notificationStudent, addClass, addSubjects, addTimetable, seeTimetable;
     private static final int FILE_SELECT_CODE = 0;
 
     @Override
@@ -59,6 +59,7 @@ public class AdminMainActivity extends AppCompatActivity {
         addSubjects = findViewById(R.id.admin_add_subjects);
         addClass = findViewById(R.id.admin_add_classes);
         addTimetable = findViewById(R.id.admin_add_timetable);
+        seeTimetable = findViewById(R.id.admin_see_timetable);
         addFaculty.setEnabled(false);
         addClass.setEnabled(false);
         listFaculty.setEnabled(false);
@@ -67,6 +68,7 @@ public class AdminMainActivity extends AppCompatActivity {
         notificationFaculty.setEnabled(false);
         addSubjects.setEnabled(false);
         addTimetable.setEnabled(false);
+        seeTimetable.setEnabled(false);
         adminMainImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +84,7 @@ public class AdminMainActivity extends AppCompatActivity {
         listFaculty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 sendToAllFaculty();
+                sendToAllFaculty();
             }
         });
         notificationFaculty.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +103,12 @@ public class AdminMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendToStudentNotification();
+            }
+        });
+        seeTimetable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendToSeeTimetable();
             }
         });
         addSubjects.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +164,7 @@ public class AdminMainActivity extends AppCompatActivity {
                             notificationFaculty.setEnabled(true);
                             addSubjects.setEnabled(true);
                             addTimetable.setEnabled(true);
+                            seeTimetable.setEnabled(true);
                         }
                     } else {
                         String retrieving_error = task.getException().getMessage();
@@ -233,6 +242,12 @@ public class AdminMainActivity extends AppCompatActivity {
 
     private void sendToTimetable() {
         Intent intent = new Intent(AdminMainActivity.this, SelectSemesterClassTimetable.class);
+        intent.putExtra("branch", branch);
+        startActivity(intent);
+    }
+
+    private void sendToSeeTimetable() {
+        Intent intent = new Intent(AdminMainActivity.this, SelectSemesterClassSeeTimetable.class);
         intent.putExtra("branch", branch);
         startActivity(intent);
     }

@@ -31,12 +31,13 @@ public class MondaySubjectRecyclerAdapter extends RecyclerView.Adapter<MondaySub
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.subject.setText(subjectList.get(position).getSubject());
+        holder.subject.setText(subjectList.get(position).getSubjectName());
         String from = subjectList.get(position).getFrom();
         String to = subjectList.get(position).getTo();
         String timeValue = from + " : " + to;
         holder.time.setText(timeValue);
-        holder.takenByValue.setText(subjectList.get(position).getTakenBy());
+        holder.takenByValue.setText(subjectList.get(position).getSubjectTeacher());
+        holder.subjectCode.setText(subjectList.get(position).getSubjectCode());
     }
 
     @Override
@@ -54,6 +55,7 @@ public class MondaySubjectRecyclerAdapter extends RecyclerView.Adapter<MondaySub
             subject = mView.findViewById(R.id.subject_value);
             time = mView.findViewById(R.id.time_value);
             takenByValue = mView.findViewById(R.id.taken_by_value);
+            subjectCode = mView.findViewById(R.id.subject_code);
         }
     }
 }
