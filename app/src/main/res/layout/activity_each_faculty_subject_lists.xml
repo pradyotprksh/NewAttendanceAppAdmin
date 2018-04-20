@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminAllFacultyList">
+    tools:context=".EachFacultySubjectLists">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/admin_allstudentlist_toolbar"
+        android:id="@+id/faculty_subject_list_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -20,19 +20,17 @@
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/admin_student_lists"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/facultySubjectLists"
+        android:layout_width="395dp"
+        android:layout_height="587dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </android.support.v7.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/faculty_subject_list_toolbar" />
 
 </android.support.constraint.ConstraintLayout>

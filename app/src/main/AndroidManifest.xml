@@ -74,7 +74,9 @@
         <activity android:name=".EachSubjectDetails" />
         <activity android:name=".AddTimetable" />
         <activity android:name=".SelectSubjectTimetable" />
-        <activity android:name=".SelectSemesterClassSeeTimetable"></activity>
+        <activity android:name=".SelectSemesterClassSeeTimetable" />
+        <activity android:name=".EachFacultyDetails" />
+        <activity android:name=".EachFacultySubjectLists"></activity>
     </application>
 
 </manifest>

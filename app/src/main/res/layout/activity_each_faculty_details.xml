@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.application.pradyotprakash.newattendanceappadmin.EachStudentInformation">
+    tools:context=".EachFacultyDetails">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/faculty_image"
@@ -34,13 +34,13 @@
         app:layout_constraintTop_toBottomOf="@+id/faculty_image" />
 
     <TextView
-        android:id="@+id/student_usn"
+        android:id="@+id/faculty_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="@string/loading_usn"
+        android:text="Loading ID..."
         android:textColor="@color/colorPrimaryDark"
         android:textSize="25sp"
         android:textStyle="normal"
@@ -51,44 +51,30 @@
 
     <TextView
         android:id="@+id/faculty_branch"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="2dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="288dp"
         android:text="@string/loading_branch"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.072"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/student_class"
-        android:layout_width="wrap_content"
+        android:id="@+id/faculty_class_teacher"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="328dp"
-        android:text="@string/loading_class"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.852"
-        app:layout_constraintStart_toEndOf="@+id/faculty_branch"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/student_semester"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="288dp"
-        android:text="@string/loading_semester"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="324dp"
+        android:gravity="left"
+        android:text="Loading Class Teacher..."
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.852"
-        app:layout_constraintStart_toEndOf="@+id/faculty_branch"
+        app:layout_constraintHorizontal_bias="0.068"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -106,6 +92,24 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/faculty_subjects"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="240dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_layout_background"
+        android:padding="15dp"
+        android:text="Subjects Lists"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

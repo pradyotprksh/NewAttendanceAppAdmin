@@ -33,10 +33,10 @@ public class EachStudentInformation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_each_student_information);
         student_id_value = getIntent().getStringExtra("studentId");
-        studentImage = findViewById(R.id.student_image);
-        studentName = findViewById(R.id.student_name);
+        studentImage = findViewById(R.id.faculty_image);
+        studentName = findViewById(R.id.faculty_name);
         studentUsn = findViewById(R.id.student_usn);
-        studentBranch = findViewById(R.id.student_branch);
+        studentBranch = findViewById(R.id.faculty_branch);
         studentSemester = findViewById(R.id.student_semester);
         studentClass = findViewById(R.id.student_class);
         sendMessage = findViewById(R.id.send_message);

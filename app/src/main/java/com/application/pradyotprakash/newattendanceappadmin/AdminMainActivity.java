@@ -39,7 +39,7 @@ public class AdminMainActivity extends AppCompatActivity {
     private String user_id, branch;
     private TextView adminMainName;
     private CircleImageView adminMainImage;
-    private Button addFaculty, listFaculty, notificationFaculty, listStudent, notificationStudent, addClass, addSubjects, addTimetable, seeTimetable;
+    private Button listFaculty, notificationFaculty, listStudent, notificationStudent, addClass, addSubjects, addTimetable, seeTimetable;
     private static final int FILE_SELECT_CODE = 0;
 
     @Override
@@ -51,7 +51,6 @@ public class AdminMainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         adminMainName = findViewById(R.id.admin_main_name);
         adminMainImage = findViewById(R.id.admin_main_image);
-        addFaculty = findViewById(R.id.admin_add_faculty);
         listFaculty = findViewById(R.id.admin_faculty_list);
         notificationFaculty = findViewById(R.id.admin_send_notification_faculty);
         listStudent = findViewById(R.id.admin_student_list);
@@ -60,7 +59,6 @@ public class AdminMainActivity extends AppCompatActivity {
         addClass = findViewById(R.id.admin_add_classes);
         addTimetable = findViewById(R.id.admin_add_timetable);
         seeTimetable = findViewById(R.id.admin_see_timetable);
-        addFaculty.setEnabled(false);
         addClass.setEnabled(false);
         listFaculty.setEnabled(false);
         notificationFaculty.setEnabled(false);
@@ -73,12 +71,6 @@ public class AdminMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendToSetup();
-            }
-        });
-        addFaculty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(AdminMainActivity.this, "Add Faculty Details", Toast.LENGTH_SHORT).show();
             }
         });
         listFaculty.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +148,6 @@ public class AdminMainActivity extends AppCompatActivity {
                             RequestOptions placeHolderRequest = new RequestOptions();
                             placeHolderRequest.placeholder(R.mipmap.default_profile_picture);
                             Glide.with(AdminMainActivity.this).setDefaultRequestOptions(placeHolderRequest).load(image).into(adminMainImage);
-                            addFaculty.setEnabled(true);
                             addClass.setEnabled(true);
                             listFaculty.setEnabled(true);
                             notificationFaculty.setEnabled(true);
