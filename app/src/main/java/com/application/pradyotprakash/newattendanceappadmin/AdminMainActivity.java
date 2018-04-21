@@ -39,7 +39,7 @@ public class AdminMainActivity extends AppCompatActivity {
     private String user_id, branch;
     private TextView adminMainName;
     private CircleImageView adminMainImage;
-    private Button listFaculty, notificationFaculty, listStudent, notificationStudent, addClass, addSubjects, addTimetable, seeTimetable;
+    private Button listFaculty, listStudent, notificationStudent, addClass, addSubjects, addTimetable, seeTimetable;
     private static final int FILE_SELECT_CODE = 0;
 
     @Override
@@ -52,7 +52,6 @@ public class AdminMainActivity extends AppCompatActivity {
         adminMainName = findViewById(R.id.admin_main_name);
         adminMainImage = findViewById(R.id.admin_main_image);
         listFaculty = findViewById(R.id.admin_faculty_list);
-        notificationFaculty = findViewById(R.id.admin_send_notification_faculty);
         listStudent = findViewById(R.id.admin_student_list);
         notificationStudent = findViewById(R.id.admin_send_notification_student);
         addSubjects = findViewById(R.id.admin_add_subjects);
@@ -61,9 +60,7 @@ public class AdminMainActivity extends AppCompatActivity {
         seeTimetable = findViewById(R.id.admin_see_timetable);
         addClass.setEnabled(false);
         listFaculty.setEnabled(false);
-        notificationFaculty.setEnabled(false);
         listStudent.setEnabled(false);
-        notificationFaculty.setEnabled(false);
         addSubjects.setEnabled(false);
         addTimetable.setEnabled(false);
         seeTimetable.setEnabled(false);
@@ -77,12 +74,6 @@ public class AdminMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendToAllFaculty();
-            }
-        });
-        notificationFaculty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(AdminMainActivity.this, "Send Notification To Faculty", Toast.LENGTH_SHORT).show();
             }
         });
         listStudent.setOnClickListener(new View.OnClickListener() {
@@ -150,9 +141,7 @@ public class AdminMainActivity extends AppCompatActivity {
                             Glide.with(AdminMainActivity.this).setDefaultRequestOptions(placeHolderRequest).load(image).into(adminMainImage);
                             addClass.setEnabled(true);
                             listFaculty.setEnabled(true);
-                            notificationFaculty.setEnabled(true);
                             listStudent.setEnabled(true);
-                            notificationFaculty.setEnabled(true);
                             addSubjects.setEnabled(true);
                             addTimetable.setEnabled(true);
                             seeTimetable.setEnabled(true);

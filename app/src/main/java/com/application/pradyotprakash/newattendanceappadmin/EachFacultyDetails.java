@@ -21,12 +21,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EachFacultyDetails extends AppCompatActivity {
 
-    private String facultyId;
+    private String facultyId, name;
     private TextView facultyName, facultyIdValue, facultyBranch, facultyClassTeacher;
     private CircleImageView facultyImage;
     private FirebaseFirestore mFirestore;
     private Uri studentImageURI = null;
-    private Button facultySubjects;
+    private Button facultySubjects, facultyProctor, facultyNotification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class EachFacultyDetails extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     if (task.getResult().exists()) {
+                        name = task.getResult().getString("name");
                         facultyName.setText(task.getResult().getString("name"));
                         facultyIdValue.setText(task.getResult().getString("id"));
                         facultyBranch.setText(task.getResult().getString("branch"));
@@ -72,6 +73,25 @@ public class EachFacultyDetails extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(EachFacultyDetails.this, EachFacultySubjectLists.class);
                 intent.putExtra("facultyId", facultyId);
+                startActivity(intent);
+            }
+        });
+        facultyProctor = findViewById(R.id.faculty_proctor);
+        facultyProctor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EachFacultyDetails.this, EachFacultyProctorLists.class);
+                intent.putExtra("facultyId", facultyId);
+                startActivity(intent);
+            }
+        });
+        facultyNotification = findViewById(R.id.send_message);
+        facultyNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EachFacultyDetails.this, EachFacultyNotification.class);
+                intent.putExtra("facultyId", facultyId);
+                intent.putExtra("name", name);
                 startActivity(intent);
             }
         });

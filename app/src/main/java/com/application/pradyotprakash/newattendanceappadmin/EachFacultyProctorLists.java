@@ -19,38 +19,38 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EachFacultySubjectLists extends AppCompatActivity {
+public class EachFacultyProctorLists extends AppCompatActivity {
 
     private String facultyId;
     private RecyclerView mSubjectListView;
-    private List<FacultySubjects> subjectsList;
-    private FacultySubjectRecyclerAdapter subjectRecyclerAdapter;
+    private List<FacultyProctors> subjectsList;
+    private FacultyProctorRecyclerAdapter subjectRecyclerAdapter;
     private FirebaseFirestore mFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_each_faculty_subject_lists);
+        setContentView(R.layout.activity_each_faculty_proctor_lists);
         facultyId = getIntent().getStringExtra("facultyId");
         Toolbar mToolbar = findViewById(R.id.faculty_subject_list_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Subject List");
+        getSupportActionBar().setTitle("Proctor Students List");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mFirestore = FirebaseFirestore.getInstance();
         mSubjectListView = findViewById(R.id.facultySubjectLists);
         subjectsList = new ArrayList<>();
         subjectsList.clear();
-        subjectRecyclerAdapter = new FacultySubjectRecyclerAdapter(subjectsList, getApplicationContext());
+        subjectRecyclerAdapter = new FacultyProctorRecyclerAdapter(subjectsList, getApplicationContext());
         mSubjectListView.setHasFixedSize(true);
         mSubjectListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mSubjectListView.setAdapter(subjectRecyclerAdapter);
-        mFirestore.collection("Faculty").document(facultyId).collection("Subjects").orderBy("semester").addSnapshotListener(EachFacultySubjectLists.this, new EventListener<QuerySnapshot>() {
+        mFirestore.collection("Faculty").document(facultyId).collection("Proctor").addSnapshotListener(EachFacultyProctorLists.this, new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
                     if (doc.getType() == DocumentChange.Type.ADDED) {
-                        FacultySubjects subjects = doc.getDocument().toObject(FacultySubjects.class);
+                        FacultyProctors subjects = doc.getDocument().toObject(FacultyProctors.class);
                         subjectsList.add(subjects);
                         subjectRecyclerAdapter.notifyDataSetChanged();
                     }
@@ -59,7 +59,7 @@ public class EachFacultySubjectLists extends AppCompatActivity {
         });
         DividerItemDecoration horizontalDecoration = new DividerItemDecoration(mSubjectListView.getContext(),
                 DividerItemDecoration.VERTICAL);
-        Drawable horizontalDivider = ContextCompat.getDrawable(EachFacultySubjectLists.this, R.drawable.horizontal_divider);
+        Drawable horizontalDivider = ContextCompat.getDrawable(EachFacultyProctorLists.this, R.drawable.horizontal_divider);
         horizontalDecoration.setDrawable(horizontalDivider);
         mSubjectListView.addItemDecoration(horizontalDecoration);
     }
