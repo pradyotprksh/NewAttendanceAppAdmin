@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -56,6 +57,12 @@ public class FacultyRecyclerAdapter extends RecyclerView.Adapter<FacultyRecycler
     @Override
     public int getItemCount() {
         return studentsList.size();
+    }
+
+    public void setfilter(List<Faculties> listitem) {
+        studentsList = new ArrayList<>();
+        studentsList.addAll(listitem);
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

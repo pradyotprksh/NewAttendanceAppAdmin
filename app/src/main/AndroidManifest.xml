@@ -78,7 +78,10 @@
         <activity android:name=".EachFacultyDetails" />
         <activity android:name=".EachFacultySubjectLists" />
         <activity android:name=".EachFacultyProctorLists" />
-        <activity android:name=".EachFacultyNotification"></activity>
+        <activity android:name=".EachFacultyNotification" />
+        <activity android:name=".EachStudentSubjectDetails" />
+        <activity android:name=".EachSubjectStudentDetails" />
+        <activity android:name=".EachSubjectStudentMarks"></activity>
     </application>
 
 </manifest>

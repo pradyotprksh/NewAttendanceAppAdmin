@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -12,14 +13,19 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -57,6 +63,7 @@ public class AdminAllFacultyList extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private int position;
     private FirebaseFirestore mFirestore1, mFirestore2;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +122,7 @@ public class AdminAllFacultyList extends AppCompatActivity {
                 if (!TextUtils.isEmpty(finalMessage.getText().toString())) {
                     progress = new ProgressDialog(AdminAllFacultyList.this);
                     progress.setTitle("Please Wait.");
-                    progress.setMessage("Sending Message To Every Faculty You.");
+                    progress.setMessage("Sending Message To Every Faculty.");
                     progress.setCancelable(false);
                     progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progress.show();
@@ -140,6 +147,7 @@ public class AdminAllFacultyList extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(DocumentReference documentReference) {
                                                 Toast.makeText(AdminAllFacultyList.this, "Message Sent", Toast.LENGTH_SHORT).show();
+                                                finalMessage.setText("");
                                             }
                                         });
                                     }
@@ -198,6 +206,61 @@ public class AdminAllFacultyList extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.searchfile, menu);
+        final MenuItem myActionMenuItem = menu.findItem(R.id.search);
+        searchView = (SearchView) myActionMenuItem.getActionView();
+        changeSearchViewTextColor(searchView);
+        ((EditText) searchView.findViewById(
+                android.support.v7.appcompat.R.id.search_src_text)).
+                setHintTextColor(getResources().getColor(R.color.colorPrimary));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (!searchView.isIconified()) {
+                    searchView.setIconified(true);
+                }
+                myActionMenuItem.collapseActionView();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                final List<Faculties> filtermodelist = filter(studentsList, newText);
+                studentRecyclerAdapter.setfilter(filtermodelist);
+                return true;
+            }
+        });
+        return true;
+    }
+
+    private List<Faculties> filter(List<Faculties> pl, String query) {
+        query = query.toLowerCase();
+        final List<Faculties> filteredModeList = new ArrayList<>();
+        for (Faculties model : pl) {
+            final String text = model.getName().toLowerCase();
+            if (text.startsWith(query)) {
+                filteredModeList.add(model);
+            }
+        }
+        return filteredModeList;
+    }
+
+    private void changeSearchViewTextColor(View view) {
+        if (view != null) {
+            if (view instanceof TextView) {
+                ((TextView) view).setTextColor(Color.WHITE);
+                return;
+            } else if (view instanceof ViewGroup) {
+                ViewGroup viewGroup = (ViewGroup) view;
+                for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                    changeSearchViewTextColor(viewGroup.getChildAt(i));
+                }
+            }
+        }
     }
 
     public static String adminBranch() {

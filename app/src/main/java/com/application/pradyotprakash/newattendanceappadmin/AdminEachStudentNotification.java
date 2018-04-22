@@ -111,12 +111,4 @@ public class AdminEachStudentNotification extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(AdminEachStudentNotification.this,EachStudentInformation.class);
-        intent.putExtra("studentId", student_id);
-        startActivity(intent);
-    }
-
 }
