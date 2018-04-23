@@ -1,8 +1,11 @@
 package com.application.pradyotprakash.newattendanceappadmin;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -95,18 +98,19 @@ public class AdminAddClasses extends AppCompatActivity {
             }
         });
         getClass = findViewById(R.id.admin_getclass_btn2);
+        mClassList = findViewById(R.id.classList);
+        classList = new ArrayList<>();
+        classRecyclerAdapter = new AddClassRecyclerAdapter(classList, getApplicationContext());
+        mClassList.setHasFixedSize(true);
+        mClassList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mClassList.setAdapter(classRecyclerAdapter);
+        mFirestore = FirebaseFirestore.getInstance();
         getClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 semesterValue = semesterOption.getText().toString();
                 if (!TextUtils.isEmpty(semesterValue)) {
-                    mClassList = findViewById(R.id.classList);
-                    classList = new ArrayList<>();
-                    classRecyclerAdapter = new AddClassRecyclerAdapter(classList, getApplicationContext());
-                    mClassList.setHasFixedSize(true);
-                    mClassList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    mClassList.setAdapter(classRecyclerAdapter);
-                    mFirestore = FirebaseFirestore.getInstance();
+                    classList.clear();
                     mFirestore.collection("Class").document(branch).collection(semesterValue).orderBy("classValue").addSnapshotListener(AdminAddClasses.this, new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
@@ -125,5 +129,9 @@ public class AdminAddClasses extends AppCompatActivity {
                 }
             }
         });
+        DividerItemDecoration horizontalDecoration = new DividerItemDecoration(mClassList.getContext(),
+                DividerItemDecoration.VERTICAL);
+        Drawable horizontalDivider = ContextCompat.getDrawable(AdminAddClasses.this, R.drawable.horizontal_divider);
+        horizontalDecoration.setDrawable(horizontalDivider);
     }
 }

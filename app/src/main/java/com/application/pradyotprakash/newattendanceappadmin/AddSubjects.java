@@ -1,7 +1,10 @@
 package com.application.pradyotprakash.newattendanceappadmin;
 
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -58,7 +61,6 @@ public class AddSubjects extends AppCompatActivity {
                     HashMap<String, Object> addSubjectMap = new HashMap<>();
                     addSubjectMap.put("subjectName", subjectValue);
                     addSubjectMap.put("subjectCode", subjectIdValue);
-                    addSubjectMap.put("subjectTeacher", "Assign Subject Teacher");
                     addSubjectMap.put("branch", branch);
                     addSubjectMap.put("semester", semester);
                     mFirestore.collection("Subject").document(branch).collection(semester).document(subjectIdValue).set(addSubjectMap).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -95,5 +97,9 @@ public class AddSubjects extends AppCompatActivity {
                 }
             }
         });
+        DividerItemDecoration horizontalDecoration = new DividerItemDecoration(mSubjectList.getContext(),
+                DividerItemDecoration.VERTICAL);
+        Drawable horizontalDivider = ContextCompat.getDrawable(AddSubjects.this, R.drawable.horizontal_divider);
+        horizontalDecoration.setDrawable(horizontalDivider);
     }
 }

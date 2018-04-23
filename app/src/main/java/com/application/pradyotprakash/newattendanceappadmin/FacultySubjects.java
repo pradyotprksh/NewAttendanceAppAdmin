@@ -2,18 +2,27 @@ package com.application.pradyotprakash.newattendanceappadmin;
 
 public class FacultySubjects {
 
-    private String branch, semester, subjectCode, subjectName;
+    private String branch, semester, subjectCode, subjectName, classValue;
     private Double totalDays;
 
     public FacultySubjects() {
     }
 
-    public FacultySubjects(String branch, String semester, String subjectCode, String subjectName, Double totalDays) {
+    public FacultySubjects(String branch, String semester, String subjectCode, String subjectName, String classValue, Double totalDays) {
         this.branch = branch;
         this.semester = semester;
         this.subjectCode = subjectCode;
         this.subjectName = subjectName;
+        this.classValue = classValue;
         this.totalDays = totalDays;
+    }
+
+    public String getClassValue() {
+        return classValue;
+    }
+
+    public void setClassValue(String classValue) {
+        this.classValue = classValue;
     }
 
     public String getBranch() {

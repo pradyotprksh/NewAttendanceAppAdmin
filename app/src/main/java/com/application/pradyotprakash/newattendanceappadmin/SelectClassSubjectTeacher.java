@@ -15,52 +15,43 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AssignSubjectTeacher extends AppCompatActivity {
+public class SelectClassSubjectTeacher extends AppCompatActivity {
 
-    private static String subjectId, branchValue, semesterValue, subjectName, classId;
-    private RecyclerView facultyList;
-    private List<ClassTeacher> facultyClassList;
-    private SubjectTeacherRecyclerAdapter classTeacherRecyclerAdapter;
+    private static String subjectId, branchValue, semesterValue, subjectName;
+    private RecyclerView mClassList;
+    private List<ClassList> classList;
+    private ClassRecyclerAdapter classRecyclerAdapter;
     private FirebaseFirestore mFirestore;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_assign_subject_teacher);
-        subjectId = getIntent().getStringExtra("subjectId");
+        setContentView(R.layout.activity_select_class_subject_teacher);
         Toolbar mToolbar = findViewById(R.id.adminClassTeacherToolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Select Subject Teacher for " + subjectId);
+        getSupportActionBar().setTitle("Select Class");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        subjectId = getIntent().getStringExtra("subjectId");
         branchValue = getIntent().getStringExtra("branch");
         semesterValue = getIntent().getStringExtra("semester");
         subjectName = getIntent().getStringExtra("subjectName");
-        classId = getIntent().getStringExtra("classId");
+        mClassList = findViewById(R.id.classList);
+        classList = new ArrayList<>();
+        classRecyclerAdapter = new ClassRecyclerAdapter(classList, getApplicationContext());
+        mClassList.setHasFixedSize(true);
+        mClassList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mClassList.setAdapter(classRecyclerAdapter);
         mFirestore = FirebaseFirestore.getInstance();
-        facultyList = findViewById(R.id.facultyList);
-        facultyClassList = new ArrayList<>();
-        facultyClassList.clear();
-        classTeacherRecyclerAdapter = new SubjectTeacherRecyclerAdapter(facultyClassList, getApplicationContext());
-        facultyList.setHasFixedSize(true);
-        facultyList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        facultyList.setAdapter(classTeacherRecyclerAdapter);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        facultyClassList.clear();
-        mFirestore.collection("Faculty").orderBy("name").addSnapshotListener(AssignSubjectTeacher.this, new EventListener<QuerySnapshot>() {
+        mFirestore.collection("Class").document(branchValue).collection(semesterValue).orderBy("classValue").addSnapshotListener(SelectClassSubjectTeacher.this, new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
                     if (doc.getType() == DocumentChange.Type.ADDED) {
-                        String faculty_id = doc.getDocument().getId();
-                        ClassTeacher teacher = doc.getDocument().toObject(ClassTeacher.class).withId(faculty_id);
-                        facultyClassList.add(teacher);
-                        classTeacherRecyclerAdapter.notifyDataSetChanged();
+                        String subject_id = doc.getDocument().getId();
+                        ClassList classValueList = doc.getDocument().toObject(ClassList.class).withId(subject_id);
+                        classList.add(classValueList);
+                        classRecyclerAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -81,9 +72,5 @@ public class AssignSubjectTeacher extends AppCompatActivity {
 
     public static String getSubjectName() {
         return subjectName;
-    }
-
-    public static String getClassId() {
-        return classId;
     }
 }

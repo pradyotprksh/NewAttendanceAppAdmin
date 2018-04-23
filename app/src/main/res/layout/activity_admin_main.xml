@@ -71,22 +71,6 @@
         app:layout_constraintTop_toBottomOf="@+id/admin_faculty_list" />
 
     <Button
-        android:id="@+id/admin_send_notification_student"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="10dp"
-        android:text="@string/send_notification_student"
-        android:textColor="@android:color/white"
-        android:theme="@style/AdminButton2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/admin_student_list" />
-
-    <Button
         android:id="@+id/admin_add_subjects"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -148,6 +132,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/admin_send_notification_student" />
+        app:layout_constraintTop_toBottomOf="@+id/admin_student_list" />
 
 </android.support.constraint.ConstraintLayout>

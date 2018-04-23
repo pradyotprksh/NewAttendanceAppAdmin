@@ -58,10 +58,6 @@
             android:parentActivityName=".AdminMainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AdminStudentNotification"
-            android:parentActivityName=".AdminMainActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".AdminEachStudentNotification"
             android:parentActivityName=".EachStudentInformation"
             android:screenOrientation="portrait" />
@@ -81,7 +77,8 @@
         <activity android:name=".EachFacultyNotification" />
         <activity android:name=".EachStudentSubjectDetails" />
         <activity android:name=".EachSubjectStudentDetails" />
-        <activity android:name=".EachSubjectStudentMarks"></activity>
+        <activity android:name=".EachSubjectStudentMarks" />
+        <activity android:name=".SelectClassSubjectTeacher"></activity>
     </application>
 
 </manifest>

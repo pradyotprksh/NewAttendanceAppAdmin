@@ -39,7 +39,7 @@ public class AdminMainActivity extends AppCompatActivity {
     private String user_id, branch;
     private TextView adminMainName;
     private CircleImageView adminMainImage;
-    private Button listFaculty, listStudent, notificationStudent, addClass, addSubjects, addTimetable, seeTimetable;
+    private Button listFaculty, listStudent, addClass, addSubjects, addTimetable, seeTimetable;
     private static final int FILE_SELECT_CODE = 0;
 
     @Override
@@ -53,7 +53,6 @@ public class AdminMainActivity extends AppCompatActivity {
         adminMainImage = findViewById(R.id.admin_main_image);
         listFaculty = findViewById(R.id.admin_faculty_list);
         listStudent = findViewById(R.id.admin_student_list);
-        notificationStudent = findViewById(R.id.admin_send_notification_student);
         addSubjects = findViewById(R.id.admin_add_subjects);
         addClass = findViewById(R.id.admin_add_classes);
         addTimetable = findViewById(R.id.admin_add_timetable);
@@ -64,6 +63,18 @@ public class AdminMainActivity extends AppCompatActivity {
         addSubjects.setEnabled(false);
         addTimetable.setEnabled(false);
         seeTimetable.setEnabled(false);
+        admin_main_toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendToSetup();
+            }
+        });
+        adminMainName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendToSetup();
+            }
+        });
         adminMainImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,12 +91,6 @@ public class AdminMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendToAllStudent();
-            }
-        });
-        notificationStudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendToStudentNotification();
             }
         });
         seeTimetable.setOnClickListener(new View.OnClickListener() {
@@ -212,11 +217,6 @@ public class AdminMainActivity extends AppCompatActivity {
     private void sendToAddClass() {
         Intent intent = new Intent(AdminMainActivity.this, AdminAddClasses.class);
         intent.putExtra("branch", branch);
-        startActivity(intent);
-    }
-
-    private void sendToStudentNotification() {
-        Intent intent = new Intent(AdminMainActivity.this, AdminStudentNotification.class);
         startActivity(intent);
     }
 

@@ -28,7 +28,7 @@ public class SubjectTeacherRecyclerAdapter extends RecyclerView.Adapter<SubjectT
 
     private List<ClassTeacher> facultyList;
     private Context context;
-    private String subjectId = AssignSubjectTeacher.getSubjectId(), branchValue = AssignSubjectTeacher.getBranchValue(), semesterValue = AssignSubjectTeacher.getSemesterValue(), subjectName = AssignSubjectTeacher.getSubjectName();
+    private String subjectId = AssignSubjectTeacher.getSubjectId(), branchValue = AssignSubjectTeacher.getBranchValue(), semesterValue = AssignSubjectTeacher.getSemesterValue(), subjectName = AssignSubjectTeacher.getSubjectName(), classId = AssignSubjectTeacher.getClassId();
     private FirebaseFirestore mFirestore, mFirestore1, mfirestore2, mFirestore3;
 
     public SubjectTeacherRecyclerAdapter(List<ClassTeacher> facultyList, Context context) {
@@ -50,14 +50,18 @@ public class SubjectTeacherRecyclerAdapter extends RecyclerView.Adapter<SubjectT
         mfirestore2 = FirebaseFirestore.getInstance();
         mFirestore3 = FirebaseFirestore.getInstance();
         if (branchValue.equals(facultyList.get(position).getBranch())) {
-            mfirestore2.collection("Subject").document(branchValue).collection(semesterValue).document(subjectId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            mfirestore2.collection("Subject").document(branchValue).collection(semesterValue).document(subjectId).collection(classId).document(facultyId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         if (task.getResult().exists()) {
-                            if (task.getResult().getString("subjectTeacher").equals(facultyId)) {
-                                holder.mView.setBackgroundColor(Color.BLUE);
-                                holder.faculty_list_name.setTextColor(Color.WHITE);
+                            try {
+                                if (task.getResult().getString("subjectTeacher").equals(facultyId)) {
+                                    holder.mView.setBackgroundColor(Color.BLUE);
+                                    holder.faculty_list_name.setTextColor(Color.WHITE);
+                                }
+                            } catch (Exception e) {
+
                             }
                         }
                     }
@@ -69,39 +73,91 @@ public class SubjectTeacherRecyclerAdapter extends RecyclerView.Adapter<SubjectT
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mFirestore.collection("Subject").document(branchValue).collection(semesterValue).document(subjectId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    mfirestore2.collection("Subject").document(branchValue).collection(semesterValue).document(subjectId).collection(classId).document(facultyId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
                                 if (task.getResult().exists()) {
-                                    if (task.getResult().getString("subjectTeacher").equals("Assign Subject Teacher")) {
-                                        HashMap<String, Object> assignSubjectTeacher = new HashMap<>();
-                                        assignSubjectTeacher.put("subjectTeacher", facultyId);
-                                        mFirestore1.collection("Subject").document(branchValue).collection(semesterValue).document(subjectId).update(assignSubjectTeacher).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    try {
+                                        if (task.getResult().getString("subjectTeacher").equals(facultyId)) {
+                                            Intent intent = new Intent(context, EachSubjectDetails.class);
+                                            intent.putExtra("classId", classId);
+                                            intent.putExtra("facultyName", facultyList.get(position).getName());
+                                            intent.putExtra("subjectId", subjectId);
+                                            intent.putExtra("subjectName", subjectName);
+                                            intent.putExtra("branch", branchValue);
+                                            intent.putExtra("semester", semesterValue);
+                                            intent.putExtra("facultyId", facultyId);
+                                            context.startActivity(intent);
+                                            Toast.makeText(context, subjectId + " is assigned to same faculty.", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Intent intent = new Intent(context, EachSubjectDetails.class);
+                                            intent.putExtra("classId", classId);
+                                            intent.putExtra("facultyName", facultyList.get(position).getName());
+                                            intent.putExtra("subjectId", subjectId);
+                                            intent.putExtra("subjectName", subjectName);
+                                            intent.putExtra("branch", branchValue);
+                                            intent.putExtra("semester", semesterValue);
+                                            intent.putExtra("facultyId", facultyId);
+                                            Toast.makeText(context, subjectId + " is assigned to some other faculty.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } catch (Exception e) {
+                                        HashMap<String, Object> addToSubject = new HashMap<>();
+                                        addToSubject.put(classId, facultyId);
+                                        mFirestore.collection("Subject").document(branchValue).collection(semesterValue).document(subjectId).update(addToSubject).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                HashMap<String, Object> assignSubjectToFaculty = new HashMap<>();
-                                                assignSubjectToFaculty.put("subjectName", subjectName);
-                                                assignSubjectToFaculty.put("branch", branchValue);
-                                                assignSubjectToFaculty.put("semester", semesterValue);
-                                                assignSubjectToFaculty.put("subjectCode", subjectId);
-                                                mFirestore3.collection("Faculty").document(facultyId).collection("Subjects").document(subjectId).set(assignSubjectToFaculty).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                HashMap<String, Object> assignSubjectTeacher = new HashMap<>();
+                                                assignSubjectTeacher.put("subjectTeacher", facultyId);
+                                                assignSubjectTeacher.put("classValue", classId);
+                                                mFirestore1.collection("Subject").document(branchValue).collection(semesterValue).document(subjectId).collection(classId).document(facultyId).set(assignSubjectTeacher).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(context,subjectId + " is assigned.", Toast.LENGTH_SHORT).show();
-                                                        Intent goBack = new Intent(context, AddSubjects.class);
-                                                        goBack.putExtra("branch", branchValue);
-                                                        goBack.putExtra("semester", semesterValue);
-                                                        context.startActivity(goBack);
+                                                        HashMap<String, Object> assignSubjectToFaculty = new HashMap<>();
+                                                        assignSubjectToFaculty.put("classValue", classId);
+                                                        assignSubjectToFaculty.put("subjectName", subjectName);
+                                                        assignSubjectToFaculty.put("branch", branchValue);
+                                                        assignSubjectToFaculty.put("semester", semesterValue);
+                                                        assignSubjectToFaculty.put("subjectCode", subjectId);
+                                                        mFirestore3.collection("Faculty").document(facultyId).collection("Subjects").document(subjectId).set(assignSubjectToFaculty).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Toast.makeText(context, subjectId + " is assigned.", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
                                                     }
                                                 });
                                             }
                                         });
-                                    } else if (task.getResult().getString("subjectTeacher").equals(facultyId)) {
-                                        Toast.makeText(context,subjectId + " is assigned to him/her.", Toast.LENGTH_SHORT).show();
-                                    }else {
-                                        Toast.makeText(context,subjectId + " is assigned to someone else.", Toast.LENGTH_SHORT).show();
                                     }
+                                } else {
+                                    HashMap<String, Object> addToSubject = new HashMap<>();
+                                    addToSubject.put(classId, facultyId);
+                                    mFirestore.collection("Subject").document(branchValue).collection(semesterValue).document(subjectId).update(addToSubject).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            HashMap<String, Object> assignSubjectTeacher = new HashMap<>();
+                                            assignSubjectTeacher.put("subjectTeacher", facultyId);
+                                            assignSubjectTeacher.put("classValue", classId);
+                                            mFirestore1.collection("Subject").document(branchValue).collection(semesterValue).document(subjectId).collection(classId).document(facultyId).set(assignSubjectTeacher).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    HashMap<String, Object> assignSubjectToFaculty = new HashMap<>();
+                                                    assignSubjectToFaculty.put("classValue", classId);
+                                                    assignSubjectToFaculty.put("subjectName", subjectName);
+                                                    assignSubjectToFaculty.put("branch", branchValue);
+                                                    assignSubjectToFaculty.put("semester", semesterValue);
+                                                    assignSubjectToFaculty.put("subjectCode", subjectId);
+                                                    mFirestore3.collection("Faculty").document(facultyId).collection("Subjects").document(subjectId).set(assignSubjectToFaculty).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(context, subjectId + " is assigned.", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
                                 }
                             }
                         }

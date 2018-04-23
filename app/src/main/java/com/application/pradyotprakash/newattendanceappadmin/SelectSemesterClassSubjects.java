@@ -1,8 +1,11 @@
 package com.application.pradyotprakash.newattendanceappadmin;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -70,18 +73,19 @@ public class SelectSemesterClassSubjects extends AppCompatActivity {
             }
         });
         getSubjects = findViewById(R.id.get_class_now);
+        mSubjectList = findViewById(R.id.mSubjectList);
+        subjectList = new ArrayList<>();
+        subjectList.clear();
+        subjectRecyclerAdapter = new SubjectRecyclerAdapter(subjectList, getApplicationContext());
+        mSubjectList.setHasFixedSize(true);
+        mSubjectList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mSubjectList.setAdapter(subjectRecyclerAdapter);
+        mFirestore = FirebaseFirestore.getInstance();
         getSubjects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(semesterOption.getText().toString())) {
-                    mSubjectList = findViewById(R.id.mSubjectList);
-                    subjectList = new ArrayList<>();
                     subjectList.clear();
-                    subjectRecyclerAdapter = new SubjectRecyclerAdapter(subjectList, getApplicationContext());
-                    mSubjectList.setHasFixedSize(true);
-                    mSubjectList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    mSubjectList.setAdapter(subjectRecyclerAdapter);
-                    mFirestore = FirebaseFirestore.getInstance();
                     mFirestore.collection("Subject").document(branch).collection(semesterOption.getText().toString()).orderBy("subjectCode").addSnapshotListener(SelectSemesterClassSubjects.this, new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
@@ -100,6 +104,10 @@ public class SelectSemesterClassSubjects extends AppCompatActivity {
                 }
             }
         });
+        DividerItemDecoration horizontalDecoration = new DividerItemDecoration(mSubjectList.getContext(),
+                DividerItemDecoration.VERTICAL);
+        Drawable horizontalDivider = ContextCompat.getDrawable(SelectSemesterClassSubjects.this, R.drawable.horizontal_divider);
+        horizontalDecoration.setDrawable(horizontalDivider);
     }
 
 }

@@ -48,6 +48,19 @@
         android:textStyle="normal" />
 
     <TextView
+        android:id="@+id/subjectClassValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/subjectTotalDays"
+        android:layout_alignTop="@+id/subjectCode"
+        android:padding="10dp"
+        android:text="Loading Class..."
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="normal" />
+
+    <TextView
         android:id="@+id/subjectCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

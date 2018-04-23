@@ -194,7 +194,7 @@ public class EachSubjectStudentMarks extends AppCompatActivity {
                                                         }
                                                         totalMarksValue = external + average;
                                                         totalMarks.setText(String.valueOf(totalMarksValue));
-                                                        if (totalMarksValue < 50) {
+                                                        if (totalMarksValue < 50 || external < 35) {
                                                             totalMarks.setTextColor(Color.rgb(244, 67, 54));
                                                             textView6.setTextColor(Color.rgb(244, 67, 54));
                                                         }

@@ -30,6 +30,7 @@ public class FacultySubjectRecyclerAdapter extends RecyclerView.Adapter<FacultyS
         holder.subjectCode.setText(subjectList.get(position).getSubjectCode());
         holder.subjectSemester.setText(subjectList.get(position).getSemester());
         holder.subjectTotalDays.setText("Total Classes Conducted: " + String.valueOf(subjectList.get(position).getTotalDays()));
+        holder.subjectClass.setText("Class: " + subjectList.get(position).getClassValue());
     }
 
     @Override
@@ -39,7 +40,7 @@ public class FacultySubjectRecyclerAdapter extends RecyclerView.Adapter<FacultyS
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private View mView;
-        private TextView subjectName, subjectCode, subjectSemester, subjectTotalDays;
+        private TextView subjectName, subjectCode, subjectSemester, subjectTotalDays, subjectClass;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -48,6 +49,7 @@ public class FacultySubjectRecyclerAdapter extends RecyclerView.Adapter<FacultyS
             subjectCode = mView.findViewById(R.id.subjectCode);
             subjectSemester = mView.findViewById(R.id.subjectSemester);
             subjectTotalDays = mView.findViewById(R.id.subjectTotalDays);
+            subjectClass = mView.findViewById(R.id.subjectClassValue);
         }
     }
 }

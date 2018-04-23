@@ -29,13 +29,13 @@ import java.util.List;
 
 public class EachSubjectStudentDetails extends AppCompatActivity {
 
-    private String subjectCode, student_id, semester;
-    private TextView daysAttended, currentPercentage;
-    private FirebaseFirestore mFirestore, mFirestore1;
+    private String subjectCode, student_id, semester, classValue, branch;
+    private TextView daysAttended, currentPercentage, takenBy;
+    private FirebaseFirestore mFirestore, mFirestore1, mFirestore3;
     private RecyclerView studentStatus;
     private List<StudentsStatus> studentsList;
     private StudentsStatusRecyclerAdapter studentRecyclerAdapter;
-    private FirebaseFirestore mFirestore2;
+    private FirebaseFirestore mFirestore2, mFirestore4;
     private Button marksStatus;
 
     @Override
@@ -55,24 +55,50 @@ public class EachSubjectStudentDetails extends AppCompatActivity {
         mFirestore1 = FirebaseFirestore.getInstance();
         mFirestore2 = FirebaseFirestore.getInstance();
         studentStatus = findViewById(R.id.student_status);
+        takenBy = findViewById(R.id.takenBy);
         studentsList = new ArrayList<>();
         studentRecyclerAdapter = new StudentsStatusRecyclerAdapter(getApplicationContext(), studentsList);
         studentStatus.setHasFixedSize(true);
         studentStatus.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         studentStatus.setAdapter(studentRecyclerAdapter);
+        mFirestore3 = FirebaseFirestore.getInstance();
+        mFirestore4 = FirebaseFirestore.getInstance();
         mFirestore.collection("Student").document(student_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     if (task.getResult().exists()) {
                         semester = task.getResult().getString("semester");
+                        classValue = task.getResult().getString("className");
+                        branch = task.getResult().getString("branch");
+                        mFirestore3.collection("Subject").document(branch).collection(semester).document(subjectCode).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    if (task.getResult().exists()) {
+                                        String facultyId = task.getResult().getString(classValue);
+                                        mFirestore4.collection("Faculty").document(facultyId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    if (task.getResult().exists()) {
+                                                        String name = task.getResult().getString("name");
+                                                        takenBy.setText("Subject Teacher: " + name);
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        });
                         mFirestore1.collection("Student").document(student_id).collection(semester).document("Attendance").collection(subjectCode).document("Details").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()) {
                                     if (task.getResult().exists()) {
                                         try {
-                                            daysAttended.setText("Days Attended: " + String.valueOf(task.getResult().getDouble("daysAttended")) + " out of "+ String.valueOf(task.getResult().getDouble("totalDays")));
+                                            daysAttended.setText("Days Attended: " + String.valueOf(task.getResult().getDouble("daysAttended")) + " out of " + String.valueOf(task.getResult().getDouble("totalDays")));
                                             Double percentage = task.getResult().getDouble("percentage");
                                             if (percentage < 75.0) {
                                                 currentPercentage.setText("Percentage: " + String.valueOf(percentage));
