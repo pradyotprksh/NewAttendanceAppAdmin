@@ -16,30 +16,26 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-/**
- * Created by pradyotprakash on 25/02/18.
- */
-
-public class MondaySubjectRecyclerAdapter extends RecyclerView.Adapter<MondaySubjectRecyclerAdapter.ViewHolder> {
+public class SaturdaySubjectRecyclerAdapter extends RecyclerView.Adapter<SaturdaySubjectRecyclerAdapter.ViewHolder> {
 
     private List<MondaySubjects> subjectList;
     private Context context;
     private FirebaseFirestore mFirestore;
-    private String classValue = TimetableMondayFragment.getClassValue();
+    private String classValue = TimetableSaturdayFragment.getClassValue();
 
-    public MondaySubjectRecyclerAdapter(List<MondaySubjects> subjectList, Context context) {
+    public SaturdaySubjectRecyclerAdapter(List<MondaySubjects> subjectList, Context context) {
         this.subjectList = subjectList;
         this.context = context;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SaturdaySubjectRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.monday_subject_list, parent, false);
-        return new ViewHolder(view);
+        return new SaturdaySubjectRecyclerAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final SaturdaySubjectRecyclerAdapter.ViewHolder holder, final int position) {
         final String timetableId = subjectList.get(position).timetableId;
         holder.subject.setText(subjectList.get(position).getSubjectName());
         String from = subjectList.get(position).getFrom();
@@ -64,7 +60,7 @@ public class MondaySubjectRecyclerAdapter extends RecyclerView.Adapter<MondaySub
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ChangeTimetableValues.class);
-                intent.putExtra("dayValue", "Monday");
+                intent.putExtra("dayValue", "Saturday");
                 intent.putExtra("timetableId", timetableId);
                 intent.putExtra("classValue", classValue);
                 context.startActivity(intent);

@@ -2,15 +2,14 @@ package com.application.pradyotprakash.newattendanceappadmin;
 
 public class SubjectList extends SubjectId{
 
-    private String subjectName, subjectTeacher, branch, semester, subjectCode;
+    private String subjectName, branch, semester, subjectCode;
 
     public SubjectList() {
     }
 
-    public SubjectList(String subjectName, String subjectTeacher, String branch, String semester, String subjectCode) {
+    public SubjectList(String subjectName, String branch, String semester, String subjectCode) {
 
         this.subjectName = subjectName;
-        this.subjectTeacher = subjectTeacher;
         this.branch = branch;
         this.semester = semester;
         this.subjectCode = subjectCode;
@@ -30,14 +29,6 @@ public class SubjectList extends SubjectId{
 
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
-    }
-
-    public String getSubjectTeacher() {
-        return subjectTeacher;
-    }
-
-    public void setSubjectTeacher(String subjectTeacher) {
-        this.subjectTeacher = subjectTeacher;
     }
 
     public String getBranch() {

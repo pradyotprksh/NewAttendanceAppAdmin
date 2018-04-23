@@ -42,31 +42,25 @@ public class TimetableSubjectRecyclerAdapter extends RecyclerView.Adapter<Timeta
         final String semesterValue = subjectList.get(position).getSemester();
         mFirestore = FirebaseFirestore.getInstance();
         holder.subjectValue.setText(subjectList.get(position).getSubjectName());
-        subjectTeacherId = subjectList.get(position).getSubjectTeacher();
-        if (subjectTeacherId.equals("Assign Subject Teacher")) {
-            holder.teacherValue.setText(subjectList.get(position).getSubjectTeacher());
-        } else {
-            mFirestore.collection("Faculty").document(subjectTeacherId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        if (task.getResult().exists()) {
-                            facultyName = task.getResult().getString("name");
-                            holder.teacherValue.setText(facultyName);
-                        }
-                    }
-                }
-            });
-        }
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, AddTimetable.class);
-                intent.putExtra("classValue", classValue);
-                intent.putExtra("subjectCode", subjectId);
-                intent.putExtra("subjectTeacher", subjectTeacherId);
-                intent.putExtra("subjectName", subjectList.get(position).getSubjectName());
-                context.startActivity(intent);
+                mFirestore.collection("Subject").document(branchValue).collection(semesterValue).document(subjectId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (task.getResult().exists()) {
+                                subjectTeacherId = task.getResult().getString(classValue);
+                                Intent intent = new Intent(context, AddTimetable.class);
+                                intent.putExtra("classValue", classValue);
+                                intent.putExtra("subjectCode", subjectId);
+                                intent.putExtra("subjectTeacher", subjectTeacherId);
+                                intent.putExtra("subjectName", subjectList.get(position).getSubjectName());
+                                context.startActivity(intent);
+                            }
+                        }
+                    }
+                });
             }
         });
     }

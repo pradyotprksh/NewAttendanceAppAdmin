@@ -41,7 +41,6 @@ public class SubjectRecyclerAdapter extends RecyclerView.Adapter<SubjectRecycler
         final String semesterValue = subjectList.get(position).getSemester();
         mFirestore = FirebaseFirestore.getInstance();
         holder.subjectValue.setText(subjectList.get(position).getSubjectName());
-        subjectTeacherId = subjectList.get(position).getSubjectTeacher();
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

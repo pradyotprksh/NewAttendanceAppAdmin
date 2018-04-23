@@ -34,7 +34,7 @@ import java.util.List;
 public class TimetableMondayFragment extends Fragment {
 
     private FirebaseFirestore mFirestore;
-    private String classValue;
+    private static String classValue;
     private RecyclerView mSubjectListView;
     private List<MondaySubjects> subjectList;
     private MondaySubjectRecyclerAdapter subjectRecyclerAdapter;
@@ -64,7 +64,8 @@ public class TimetableMondayFragment extends Fragment {
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
                     if (doc.getType() == DocumentChange.Type.ADDED) {
-                        MondaySubjects subjects = doc.getDocument().toObject(MondaySubjects.class);
+                        String timetable_id = doc.getDocument().getId();
+                        MondaySubjects subjects = doc.getDocument().toObject(MondaySubjects.class).withId(timetable_id);
                         subjectList.add(subjects);
                         subjectRecyclerAdapter.notifyDataSetChanged();
                     }
@@ -72,6 +73,10 @@ public class TimetableMondayFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    public static String getClassValue() {
+        return classValue;
     }
 
 }

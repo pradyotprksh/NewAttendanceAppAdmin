@@ -4,7 +4,7 @@ package com.application.pradyotprakash.newattendanceappadmin;
  * Created by pradyotprakash on 25/02/18.
  */
 
-public class MondaySubjects {
+public class MondaySubjects extends TimetableId{
     private String subjectName, subjectCode, subjectTeacher, from, to, weekDay;
 
     public MondaySubjects() {

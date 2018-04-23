@@ -78,7 +78,8 @@
         <activity android:name=".EachStudentSubjectDetails" />
         <activity android:name=".EachSubjectStudentDetails" />
         <activity android:name=".EachSubjectStudentMarks" />
-        <activity android:name=".SelectClassSubjectTeacher"></activity>
+        <activity android:name=".SelectClassSubjectTeacher" />
+        <activity android:name=".ChangeTimetableValues"></activity>
     </application>
 
 </manifest>
