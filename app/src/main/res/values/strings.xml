@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Admin App</string>
     <string name="logo_login_page_description">Login Page Logo</string>
-    <string name="email_hint">Your Email...</string>
-    <string name="pass_hint">Password...</string>
+    <string name="email_hint">Your Email…</string>
+    <string name="pass_hint">Password…</string>
     <string name="login_to_account_btn">Login To Account</string>
-    <string name="admin_setup_name_hint">Enter Name...</string>
-    <string name="admin_setup_id_hint">Enter ID...</string>
-    <string name="admin_setup_branch_hint">Select Branch...</string>
+    <string name="admin_setup_name_hint">Enter Name…</string>
+    <string name="admin_setup_id_hint">Enter ID…</string>
+    <string name="admin_setup_branch_hint">Select Branch…</string>
     <string name="admin_setup_btn_text">Add Details</string>
     <string name="action_search_text">Search</string>
     <string name="action_setting_text">Account Setting</string>
@@ -18,11 +18,11 @@
     <string name="send_notification_student">Send Notification To Students</string>
     <string name="admin_add_timetable_btn">Add TimeTable</string>
     <string name="add_student">Add Student.</string>
-    <string name="loading_name">Loading Name...</string>
-    <string name="loading_usn">Loading USN...</string>
-    <string name="loading_branch">Loading Branch...</string>
-    <string name="loading_class">Loading Class...</string>
-    <string name="loading_semester">Loading Semester...</string>
+    <string name="loading_name">Loading Name…</string>
+    <string name="loading_usn">Loading USN…</string>
+    <string name="loading_branch">Loading Branch…</string>
+    <string name="loading_class">Loading Class…</string>
+    <string name="loading_semester">Loading Semester…</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -30,4 +30,13 @@
     <string name="select_semester">Select Semester</string>
     <string name="admin_addclass_btn_text">Add Class</string>
     <string name="send_message_each_student">Send Message</string>
+    <string name="enter_subject_name">Enter Subject Name…</string>
+    <string name="enter_subject_code">Enter Subject Code…</string>
+    <string name="add_subject">Add Subject</string>
+    <string name="add_timetable">Add Timetable</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="loading_subject">Loading Subject…</string>
+    <string name="loading_subject_id">Loading Subject Id…</string>
+    <string name="select_day_of_week">Select Day of Week</string>
 </resources>
