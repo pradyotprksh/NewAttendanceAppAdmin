@@ -43,8 +43,6 @@ public class SelectSubjectTimetable extends AppCompatActivity {
         mToolbar = findViewById(R.id.admin_selectsemester_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Select Subject");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         mSubjectList = findViewById(R.id.mSubjectList);
         subjectList = new ArrayList<>();
         subjectList.clear();

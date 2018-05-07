@@ -1,5 +1,7 @@
 package com.application.pradyotprakash.newattendanceappadmin;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,8 +47,6 @@ public class AddSubjects extends AppCompatActivity {
         Toolbar mToolbar = findViewById(R.id.adminAddSubjectToolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Add Subjects");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         branch = getIntent().getStringExtra("branch");
         semester = getIntent().getStringExtra("semester");
         subjectName = findViewById(R.id.subjectName);
@@ -55,22 +56,42 @@ public class AddSubjects extends AppCompatActivity {
         addSubejct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String subjectValue = subjectName.getText().toString().toUpperCase();
+                final String subjectValue = subjectName.getText().toString().toUpperCase();
                 final String subjectIdValue = subjectCode.getText().toString().toUpperCase();
                 if (!TextUtils.isEmpty(subjectValue) && !TextUtils.isEmpty(subjectIdValue)) {
-                    HashMap<String, Object> addSubjectMap = new HashMap<>();
-                    addSubjectMap.put("subjectName", subjectValue);
-                    addSubjectMap.put("subjectCode", subjectIdValue);
-                    addSubjectMap.put("branch", branch);
-                    addSubjectMap.put("semester", semester);
-                    mFirestore.collection("Subject").document(branch).collection(semester).document(subjectIdValue).set(addSubjectMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(AddSubjects.this, "Subject Added Successfully", Toast.LENGTH_SHORT).show();
-                            subjectName.setText("");
-                            subjectCode.setText("");
-                        }
-                    });
+                    LayoutInflater li = LayoutInflater.from(AddSubjects.this);
+                    View promptsView = li.inflate(R.layout.prompts2, null);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                            AddSubjects.this);
+                    alertDialogBuilder.setView(promptsView);
+                    alertDialogBuilder
+                            .setCancelable(false)
+                            .setPositiveButton("Yes",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            HashMap<String, Object> addSubjectMap = new HashMap<>();
+                                            addSubjectMap.put("subjectName", subjectValue);
+                                            addSubjectMap.put("subjectCode", subjectIdValue);
+                                            addSubjectMap.put("branch", branch);
+                                            addSubjectMap.put("semester", semester);
+                                            mFirestore.collection("Subject").document(branch).collection(semester).document(subjectIdValue).set(addSubjectMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(AddSubjects.this, "Subject Added Successfully", Toast.LENGTH_SHORT).show();
+                                                    subjectName.setText("");
+                                                    subjectCode.setText("");
+                                                }
+                                            });
+                                        }
+                                    })
+                            .setNegativeButton("Cancel",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
                 } else {
                     Toast.makeText(AddSubjects.this, "Enter All the Details First.", Toast.LENGTH_SHORT).show();
                 }

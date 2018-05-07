@@ -39,8 +39,6 @@ public class ChangeTimetableValues extends AppCompatActivity {
         Toolbar mToolbar = findViewById(R.id.adminEachClassTeacherToolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Timetable Details");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         dayValue = getIntent().getStringExtra("dayValue");
         timetableId = getIntent().getStringExtra("timetableId");
         classValue = getIntent().getStringExtra("classValue");

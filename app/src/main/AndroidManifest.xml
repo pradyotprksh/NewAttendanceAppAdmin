@@ -27,7 +27,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".AdminSetupActivity"
-            android:parentActivityName=".AdminMainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
@@ -35,14 +34,12 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
             android:name=".AdminAllStudentList"
-            android:parentActivityName=".AdminMainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".EachStudentInformation"
             android:screenOrientation="portrait" />
         <activity
             android:name=".AdminTimetable"
-            android:parentActivityName=".AdminMainActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
@@ -51,35 +48,70 @@
 
         <activity
             android:name=".AdminAddClasses"
-            android:parentActivityName=".AdminMainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SelectSemesterClassTimetable"
-            android:parentActivityName=".AdminMainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".AdminEachStudentNotification"
-            android:parentActivityName=".EachStudentInformation"
             android:screenOrientation="portrait" />
-        <activity android:name=".AdminAllFacultyList" />
-        <activity android:name=".AssignClassTeacher" />
-        <activity android:name=".EachClassDetails" />
-        <activity android:name=".AddSubjects" />
-        <activity android:name=".SelectSemesterClassSubjects" />
-        <activity android:name=".AssignSubjectTeacher" />
-        <activity android:name=".EachSubjectDetails" />
-        <activity android:name=".AddTimetable" />
-        <activity android:name=".SelectSubjectTimetable" />
-        <activity android:name=".SelectSemesterClassSeeTimetable" />
-        <activity android:name=".EachFacultyDetails" />
-        <activity android:name=".EachFacultySubjectLists" />
-        <activity android:name=".EachFacultyProctorLists" />
-        <activity android:name=".EachFacultyNotification" />
-        <activity android:name=".EachStudentSubjectDetails" />
-        <activity android:name=".EachSubjectStudentDetails" />
-        <activity android:name=".EachSubjectStudentMarks" />
-        <activity android:name=".SelectClassSubjectTeacher" />
-        <activity android:name=".ChangeTimetableValues"></activity>
+        <activity
+            android:name=".AdminAllFacultyList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AssignClassTeacher"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EachClassDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddSubjects"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SelectSemesterClassSubjects"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AssignSubjectTeacher"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EachSubjectDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddTimetable"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SelectSubjectTimetable"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SelectSemesterClassSeeTimetable"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EachFacultyDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EachFacultySubjectLists"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EachFacultyProctorLists"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EachFacultyNotification"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EachStudentSubjectDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EachSubjectStudentDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EachSubjectStudentMarks"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SelectClassSubjectTeacher"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChangeTimetableValues"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

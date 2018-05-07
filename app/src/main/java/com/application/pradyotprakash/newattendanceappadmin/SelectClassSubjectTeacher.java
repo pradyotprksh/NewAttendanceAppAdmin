@@ -30,8 +30,6 @@ public class SelectClassSubjectTeacher extends AppCompatActivity {
         Toolbar mToolbar = findViewById(R.id.adminClassTeacherToolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Select Class");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         subjectId = getIntent().getStringExtra("subjectId");
         branchValue = getIntent().getStringExtra("branch");
         semesterValue = getIntent().getStringExtra("semester");

@@ -1,5 +1,7 @@
 package com.application.pradyotprakash.newattendanceappadmin;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -11,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -54,8 +57,6 @@ public class AdminAddClasses extends AppCompatActivity {
         Toolbar mToolbar = findViewById(R.id.adminAddClassToolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Enter Class");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         branch = getIntent().getStringExtra("branch");
         semesterOption = findViewById(R.id.admin_addclass_semester);
         semesterSpinner = findViewById(R.id.semester_spinner);
@@ -74,24 +75,44 @@ public class AdminAddClasses extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 semesterValue = semesterOption.getText().toString();
-                String classValues = classValue.getText().toString().toUpperCase();
+                final String classValues = classValue.getText().toString().toUpperCase();
                 if (!TextUtils.isEmpty(semesterValue) && !TextUtils.isEmpty(classValues)) {
-                    HashMap<String, String> adminMap = new HashMap<>();
-                    adminMap.put("classValue", classValues);
-                    adminMap.put("classTeacher", "Assign Teacher");
-                    adminMap.put("semester", semesterValue);
-                    adminMap.put("branch", branch);
-                    adminAddClassFirestore.collection("Class").document(branch).collection(semesterValue).document(classValues).set(adminMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(AdminAddClasses.this, "All the Data Has Been Uploaded.", Toast.LENGTH_LONG).show();
-                            } else {
-                                String error = task.getException().getMessage();
-                                Toast.makeText(AdminAddClasses.this, "Error: " + error, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    LayoutInflater li = LayoutInflater.from(AdminAddClasses.this);
+                    View promptsView = li.inflate(R.layout.prompts1, null);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                            AdminAddClasses.this);
+                    alertDialogBuilder.setView(promptsView);
+                    alertDialogBuilder
+                            .setCancelable(false)
+                            .setPositiveButton("Yes",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            HashMap<String, String> adminMap = new HashMap<>();
+                                            adminMap.put("classValue", classValues);
+                                            adminMap.put("classTeacher", "Assign Teacher");
+                                            adminMap.put("semester", semesterValue);
+                                            adminMap.put("branch", branch);
+                                            adminAddClassFirestore.collection("Class").document(branch).collection(semesterValue).document(classValues).set(adminMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(AdminAddClasses.this, "All the Data Has Been Uploaded.", Toast.LENGTH_LONG).show();
+                                                    } else {
+                                                        String error = task.getException().getMessage();
+                                                        Toast.makeText(AdminAddClasses.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    })
+                            .setNegativeButton("Cancel",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
                 } else {
                     Toast.makeText(AdminAddClasses.this, "Fill all the details.", Toast.LENGTH_LONG).show();
                 }

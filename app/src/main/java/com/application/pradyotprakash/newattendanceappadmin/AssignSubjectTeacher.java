@@ -32,8 +32,6 @@ public class AssignSubjectTeacher extends AppCompatActivity {
         Toolbar mToolbar = findViewById(R.id.adminClassTeacherToolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Select Subject Teacher for " + subjectId);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         branchValue = getIntent().getStringExtra("branch");
         semesterValue = getIntent().getStringExtra("semester");
         subjectName = getIntent().getStringExtra("subjectName");

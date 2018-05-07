@@ -43,8 +43,6 @@ public class EachStudentSubjectDetails extends AppCompatActivity {
         Toolbar mToolbar = findViewById(R.id.adminSetupToolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(name + " Subject Details");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         mFirestore = FirebaseFirestore.getInstance();
         mFirestore1 = FirebaseFirestore.getInstance();
         mSubjectListView = findViewById(R.id.subjectList);

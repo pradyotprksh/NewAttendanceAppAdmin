@@ -72,8 +72,6 @@ public class AdminAllFacultyList extends AppCompatActivity {
         mToolbar = findViewById(R.id.admin_allstudentlist_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Faculty Lists");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         Intent intent = getIntent();
         branch = intent.getStringExtra("branch");
         mFirestore = FirebaseFirestore.getInstance();

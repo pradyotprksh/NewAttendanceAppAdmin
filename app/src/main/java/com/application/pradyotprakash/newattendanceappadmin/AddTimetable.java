@@ -1,15 +1,19 @@
 package com.application.pradyotprakash.newattendanceappadmin;
 
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -53,8 +57,6 @@ public class AddTimetable extends AppCompatActivity {
         mToolbar = findViewById(R.id.adminSetupToolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Create Timetable For " + classValue);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         subjectValue = findViewById(R.id.subjectValue);
         subjectIdValue = findViewById(R.id.subjectIdValue);
         weekOption = findViewById(R.id.select_weekday);
@@ -93,33 +95,53 @@ public class AddTimetable extends AppCompatActivity {
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(weekOption.getText().toString()) && !from_btn.getText().toString().equals("From") && !to_btn.getText().toString().equals("To")) {
                     if (!subjectTeacher.equals("Assign Subject Teacher")) {
-                        HashMap<String, Object> addTimetable = new HashMap<>();
-                        addTimetable.put("subjectName", subjectName);
-                        addTimetable.put("subjectCode", subjectCode);
-                        addTimetable.put("subjectTeacher", subjectTeacher);
-                        addTimetable.put("from", from_btn.getText().toString());
-                        addTimetable.put("to", to_btn.getText().toString());
-                        addTimetable.put("weekDay", weekOption.getText().toString());
-                        mFirestore.collection("Timetable").document(classValue).collection(weekOption.getText().toString()).document(subjectCode + from_btn.getText().toString() + weekOption.getText().toString()).set(addTimetable).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                HashMap<String, Object> addTimetableFaculty = new HashMap<>();
-                                addTimetableFaculty.put("subjectName", subjectName);
-                                addTimetableFaculty.put("subjectCode", subjectCode);
-                                addTimetableFaculty.put("from", from_btn.getText().toString());
-                                addTimetableFaculty.put("to", to_btn.getText().toString());
-                                addTimetableFaculty.put("weekDay", weekOption.getText().toString());
-                                addTimetableFaculty.put("classValue", classValue);
-                                mFirestore1.collection("Faculty").document(subjectTeacher).collection("Timetable").document(subjectCode + from_btn.getText().toString() + weekOption.getText().toString()).set(addTimetableFaculty).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(AddTimetable.this, "Timetable Added.", Toast.LENGTH_SHORT).show();
-                                        from_btn.setText(to_btn.getText().toString());
-                                        to_btn.setText("To");
-                                    }
-                                });
-                            }
-                        });
+                        LayoutInflater li = LayoutInflater.from(AddTimetable.this);
+                        View promptsView = li.inflate(R.layout.prompts3, null);
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                                AddTimetable.this);
+                        alertDialogBuilder.setView(promptsView);
+                        alertDialogBuilder
+                                .setCancelable(false)
+                                .setPositiveButton("Yes",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                HashMap<String, Object> addTimetable = new HashMap<>();
+                                                addTimetable.put("subjectName", subjectName);
+                                                addTimetable.put("subjectCode", subjectCode);
+                                                addTimetable.put("subjectTeacher", subjectTeacher);
+                                                addTimetable.put("from", from_btn.getText().toString());
+                                                addTimetable.put("to", to_btn.getText().toString());
+                                                addTimetable.put("weekDay", weekOption.getText().toString());
+                                                mFirestore.collection("Timetable").document(classValue).collection(weekOption.getText().toString()).document(subjectCode + from_btn.getText().toString() + weekOption.getText().toString()).set(addTimetable).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        HashMap<String, Object> addTimetableFaculty = new HashMap<>();
+                                                        addTimetableFaculty.put("subjectName", subjectName);
+                                                        addTimetableFaculty.put("subjectCode", subjectCode);
+                                                        addTimetableFaculty.put("from", from_btn.getText().toString());
+                                                        addTimetableFaculty.put("to", to_btn.getText().toString());
+                                                        addTimetableFaculty.put("weekDay", weekOption.getText().toString());
+                                                        addTimetableFaculty.put("classValue", classValue);
+                                                        mFirestore1.collection("Faculty").document(subjectTeacher).collection("Timetable").document(subjectCode + from_btn.getText().toString() + weekOption.getText().toString()).set(addTimetableFaculty).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Toast.makeText(AddTimetable.this, "Timetable Added.", Toast.LENGTH_SHORT).show();
+                                                                from_btn.setText(to_btn.getText().toString());
+                                                                to_btn.setText("To");
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            }
+                                        })
+                                .setNegativeButton("Cancel",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
                     } else {
                         Toast.makeText(AddTimetable.this, "First Assign The Subject Teacher.", Toast.LENGTH_SHORT).show();
                     }

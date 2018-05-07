@@ -1,5 +1,6 @@
 package com.application.pradyotprakash.newattendanceappadmin;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ public class EachClassDetails extends AppCompatActivity {
     private String classId, branchValue, semesterValue, classTeacher, classTeacherId;
     private TextView classValue, classTeacherValue, branchValueText, semesterValueText, removeAssignment;
     private FirebaseFirestore mFirestore, mFirestore1;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +34,6 @@ public class EachClassDetails extends AppCompatActivity {
         Toolbar mToolbar = findViewById(R.id.adminEachClassTeacherToolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Class " + classId);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         classValue = findViewById(R.id.classValue);
         classTeacherValue = findViewById(R.id.classTeacherValue);
         branchValueText = findViewById(R.id.branchValue);
@@ -45,9 +45,15 @@ public class EachClassDetails extends AppCompatActivity {
         removeAssignment = findViewById(R.id.removeAssignment);
         mFirestore = FirebaseFirestore.getInstance();
         mFirestore1 = FirebaseFirestore.getInstance();
+        progress = new ProgressDialog(EachClassDetails.this);
+        progress.setTitle("Please Wait.");
+        progress.setMessage("Removing the class teacher.");
+        progress.setCancelable(false);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         removeAssignment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progress.show();
                 HashMap<String, Object> removeClassTeacher = new HashMap<>();
                 removeClassTeacher.put("classTeacher", "Assign Teacher");
                 mFirestore.collection("Class").document(branchValue).collection(semesterValue).document(classId).update(removeClassTeacher).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -60,9 +66,11 @@ public class EachClassDetails extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(EachClassDetails.this, classId + " is removed from " + classTeacher, Toast.LENGTH_SHORT).show();
+                                progress.dismiss();
                                 Intent intent = new Intent(EachClassDetails.this, AdminAddClasses.class);
                                 intent.putExtra("branch", branchValue);
                                 startActivity(intent);
+                                finish();
                             }
                         });
                     }

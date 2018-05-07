@@ -43,7 +43,7 @@ public class AdminSetupActivity extends AppCompatActivity {
     private Uri adminMainImageURI = null;
     private EditText adminName, adminId;
     private AutoCompleteTextView adminBranch;
-    private Button adminSetupBtn;
+    private Button adminSetupBtn, adminEditBtn;
     private StorageReference madminStorageReference;
     private FirebaseAuth mAuth;
     private ProgressBar adminSetupProgress;
@@ -60,8 +60,6 @@ public class AdminSetupActivity extends AppCompatActivity {
         Toolbar mToolbar = findViewById(R.id.adminSetupToolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Your Details");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         adminSetupProgress = findViewById(R.id.admin_setup_progress);
         adminSetupImage = findViewById(R.id.admin_setup_image);
         adminId = findViewById(R.id.admin_setup_id);
@@ -171,6 +169,16 @@ public class AdminSetupActivity extends AppCompatActivity {
                 } else {
                     cropImage();
                 }
+            }
+        });
+        adminEditBtn = findViewById(R.id.admin_edit_btn);
+        adminEditBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adminName.setEnabled(true);
+                adminId.setEnabled(true);
+                adminBranch.setEnabled(true);
+                branchSpinner.setEnabled(true);
             }
         });
     }

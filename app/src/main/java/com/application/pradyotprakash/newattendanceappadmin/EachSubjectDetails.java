@@ -1,5 +1,6 @@
 package com.application.pradyotprakash.newattendanceappadmin;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ public class EachSubjectDetails extends AppCompatActivity {
     private String facultyName, subjectId, subjectName, branch, semester, facultyId, classId;
     private TextView subjectValue, subjectTeacherValue, branchValueText, semesterValueText, subjectIdValue, removeAssignment;
     private FirebaseFirestore mFirestore, mFirestore1, mFirestore2;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +37,6 @@ public class EachSubjectDetails extends AppCompatActivity {
         Toolbar mToolbar = findViewById(R.id.adminEachClassTeacherToolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Subject " + subjectName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         subjectValue = findViewById(R.id.subjectValue);
         subjectTeacherValue = findViewById(R.id.subjectTeacherValue);
         branchValueText = findViewById(R.id.branchValue);
@@ -51,9 +51,15 @@ public class EachSubjectDetails extends AppCompatActivity {
         mFirestore = FirebaseFirestore.getInstance();
         mFirestore1 = FirebaseFirestore.getInstance();
         mFirestore2 = FirebaseFirestore.getInstance();
+        progress = new ProgressDialog(EachSubjectDetails.this);
+        progress.setTitle("Please Wait.");
+        progress.setMessage("Removing the subject teacher.");
+        progress.setCancelable(false);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         removeAssignment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progress.show();
                 HashMap<String, Object> removeFromSubject = new HashMap<>();
                 removeFromSubject.put("classValue", FieldValue.delete());
                 removeFromSubject.put("subjectTeacher", FieldValue.delete());
@@ -75,6 +81,7 @@ public class EachSubjectDetails extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(EachSubjectDetails.this, "Subject Removed", Toast.LENGTH_SHORT).show();
+                                        progress.dismiss();
                                         Intent goBack = new Intent(EachSubjectDetails.this, SelectSemesterClassSubjects.class);
                                         goBack.putExtra("branch", branch);
                                         startActivity(goBack);

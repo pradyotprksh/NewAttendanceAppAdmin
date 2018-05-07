@@ -35,8 +35,6 @@ public class EachFacultySubjectLists extends AppCompatActivity {
         Toolbar mToolbar = findViewById(R.id.faculty_subject_list_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Subject List");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         mFirestore = FirebaseFirestore.getInstance();
         mSubjectListView = findViewById(R.id.facultySubjectLists);
         subjectsList = new ArrayList<>();

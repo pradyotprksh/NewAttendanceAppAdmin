@@ -45,8 +45,6 @@ public class EachFacultyNotification extends AppCompatActivity {
         mToolbar = findViewById(R.id.adminStudentNotifyToolbarSingle);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Send Notification");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         label = findViewById(R.id.labelSingle);
         message = findViewById(R.id.studentMessageSingle);
         sendBtn = findViewById(R.id.sendToStudentSingle);
