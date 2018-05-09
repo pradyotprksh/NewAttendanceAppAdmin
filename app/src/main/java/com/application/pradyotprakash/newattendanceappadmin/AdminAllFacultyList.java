@@ -144,12 +144,11 @@ public class AdminAllFacultyList extends AppCompatActivity {
                                         mFirestore1.collection("Faculty/" + studentsList.get(position).facultyId + "/Notifications").add(notificationMessage).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                             @Override
                                             public void onSuccess(DocumentReference documentReference) {
-                                                Toast.makeText(AdminAllFacultyList.this, "Message Sent", Toast.LENGTH_SHORT).show();
+                                                progress.dismiss();
                                                 finalMessage.setText("");
                                             }
                                         });
                                     }
-                                    progress.dismiss();
                                 }
                             } else {
                                 String retrieving_error = task.getException().getMessage();

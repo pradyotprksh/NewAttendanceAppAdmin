@@ -61,20 +61,24 @@ public class EachStudentInformation extends AppCompatActivity {
                         String semester = task.getResult().getString("semester");
                         String image = task.getResult().getString("image");
                         String proctor = task.getResult().getString("proctor");
-                        mFirestore
-                                .collection("Faculty")
-                                .document(proctor)
-                                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    if (task.getResult().exists()) {
-                                        String name = task.getResult().getString("name");
-                                        studentProctor.setText("Proctor: " + name);
+                        try {
+                            mFirestore
+                                    .collection("Faculty")
+                                    .document(proctor)
+                                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        if (task.getResult().exists()) {
+                                            String name = task.getResult().getString("name");
+                                            studentProctor.setText("Proctor: " + name);
+                                        }
                                     }
                                 }
-                            }
-                        });
+                            });
+                        } catch (Exception e) {
+                            studentProctor.setText("Proctor Not Assigned Yet");
+                        }
                         mFirestore1
                                 .collection("Class")
                                 .document(branch)
